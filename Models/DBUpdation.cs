@@ -1,8 +1,8 @@
 ﻿using Microsoft.Data.Sqlite;
 using System;
-using YourNoteUWP.Models;
 using System.Data.SQLite;
-namespace YourNoteUWP.Models { 
+namespace UWPYourNoteLibrary.Models 
+{ 
     public class DBUpdation
     {
 

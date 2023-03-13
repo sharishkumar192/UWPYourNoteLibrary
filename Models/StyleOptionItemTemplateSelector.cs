@@ -6,20 +6,20 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml;
-using YourNoteUWP.Models;
+using UWPYourNoteLibrary.Models;
 
-namespace YourNoteUWP.View
+namespace UWPYourNoteLibrary.Models
 {
-    internal class StyleOptionItemTemplateSelector : ItemsDataTemplateSelector
+    internal class StyleOptionItemTemplateSelector : DataTemplateSelector
     {
-        public DataTemplate NoteColorOptions { get; set; }
-        public DataTemplate FontColorOptions { get; set; }
+        public DataTemplate AllItems { get; set; }
+        public DataTemplate LastItems { get; set; }
 
         protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
         {
             DataTemplate _returnTemplate = new DataTemplate();
             var itemsControl = ItemsControl.ItemsControlFromItemContainer(container);
-            ObservableCollection<Note> contents = itemsControl.ItemsSource as ObservableCollection<Note>;
+            ObservableCollection<Models.Note> contents = itemsControl.ItemsSource as ObservableCollection<Models.Note>;
             int count = contents.Count;
 
             var i = contents.IndexOf((Note)item);

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI.WebUI;
 
-namespace YourNoteUWP
+namespace UWPYourNoteLibrary.Models
 {
     public class Logger
     {

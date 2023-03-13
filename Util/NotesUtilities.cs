@@ -7,7 +7,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
-namespace YourNoteUWP.Util
+namespace UWPYourNoteLibrary.Util
 {
     public class NotesUtilities
     {

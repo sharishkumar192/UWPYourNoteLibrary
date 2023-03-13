@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.System;
 
-namespace YourNoteUWP.Models
+namespace UWPYourNoteLibrary.Models
 {
     public class Note
     {

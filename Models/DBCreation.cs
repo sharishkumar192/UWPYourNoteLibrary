@@ -11,9 +11,9 @@ using Windows.Storage;
 using Windows.UI.Xaml;
 using System.Data.SQLite;
 using Windows.UI.Xaml.Media.Animation;
-using YourNoteUWP;
-using YourNoteUWP.Models;
-namespace YourNoteUWP.Models
+    
+using UWPYourNoteLibrary.Models;
+namespace UWPYourNoteLibrary.Models
 {
     public class DBCreation
     {

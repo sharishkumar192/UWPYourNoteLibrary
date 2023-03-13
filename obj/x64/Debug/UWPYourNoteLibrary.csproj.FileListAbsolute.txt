@@ -1,9 +1,9 @@
-D:\YourNote\UWPYourNoteLibrary\obj\x64\Debug\UWPYourNoteLibrary.csproj.AssemblyReference.cache
-D:\YourNote\UWPYourNoteLibrary\obj\x64\Debug\UWPYourNoteLibrary.csproj.CoreCompileInputs.cache
 D:\YourNote\UWPYourNoteLibrary\bin\x64\Debug\UWPYourNoteLibrary.dll
 D:\YourNote\UWPYourNoteLibrary\bin\x64\Debug\UWPYourNoteLibrary.pdb
 D:\YourNote\UWPYourNoteLibrary\bin\x64\Debug\UWPYourNoteLibrary.pri
 D:\YourNote\UWPYourNoteLibrary\bin\x64\Debug\Microsoft.UI.Xaml.Markup.winmd
+D:\YourNote\UWPYourNoteLibrary\obj\x64\Debug\UWPYourNoteLibrary.csproj.AssemblyReference.cache
+D:\YourNote\UWPYourNoteLibrary\obj\x64\Debug\UWPYourNoteLibrary.csproj.CoreCompileInputs.cache
 D:\YourNote\UWPYourNoteLibrary\obj\x64\Debug\UWPYourNoteLibrary.csproj.CopyComplete
 D:\YourNote\UWPYourNoteLibrary\obj\x64\Debug\UWPYourNoteLibrary.dll
 D:\YourNote\UWPYourNoteLibrary\obj\x64\Debug\UWPYourNoteLibrary.pdb

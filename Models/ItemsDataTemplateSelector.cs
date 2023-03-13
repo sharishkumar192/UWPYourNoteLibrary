@@ -5,30 +5,30 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml;
-using YourNoteUWP.Models;
+using UWPYourNoteLibrary.Models;
 using System.Collections.ObjectModel;
 using System.Reflection;
 
-namespace YourNoteUWP
-{
+namespace UWPYourNoteLibrary.Models {
+
     public class ItemsDataTemplateSelector : DataTemplateSelector
     {
         public DataTemplate AllItems { get; set; }
         public DataTemplate LastItems { get; set; }
-     
+
         protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
         {
             DataTemplate _returnTemplate = new DataTemplate();
             var itemsControl = ItemsControl.ItemsControlFromItemContainer(container);
- 
-       
+
+
             Type tp = item.GetType();
 
-            if (tp.Equals(typeof(Models.User)))
+            if (tp.Equals(typeof(User)))
             {
-                var contents = itemsControl.ItemsSource as ObservableCollection<Models.User>;
+                var contents = itemsControl.ItemsSource as ObservableCollection<User>;
                 int count = contents.Count;
-                var i = contents.IndexOf((Models.User)item);
+                var i = contents.IndexOf((User)item);
 
                 if (contents.Count == 1)
                     _returnTemplate = LastItems;
@@ -43,7 +43,7 @@ namespace YourNoteUWP
             }
             else
             {
-                var contents = itemsControl.ItemsSource as ObservableCollection<Note>;
+                var contents = itemsControl.ItemsSource as ObservableCollection<Models.Note>;
                 int count = contents.Count;
                 var i = contents.IndexOf((Note)item);
 
@@ -58,11 +58,11 @@ namespace YourNoteUWP
                 }
             }
 
-           
-         
+
+
 
 
             return _returnTemplate;
         }
-     }
+    }
 }

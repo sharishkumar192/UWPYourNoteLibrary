@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 
-namespace YourNoteUWP.Models
+namespace UWPYourNoteLibrary.Models
 {
    public class User
     {

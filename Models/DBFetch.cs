@@ -12,9 +12,7 @@ using System.Reflection;
 using Windows.Security.Cryptography.Core;
 using Windows.System;
 using Windows.UI.Xaml.Controls.Primitives;
-using YourNoteUWP;
-using YourNoteUWP.Models;
-namespace YourNoteUWP.Models
+namespace UWPYourNoteLibrary.Models
 {
     public class DBFetch
     {
@@ -64,11 +62,11 @@ namespace YourNoteUWP.Models
         //  ----------------------------------------LOGIN IN PAGE DB FETCHES----------------------------------------
 
         //Gets the Suggestion list
-        //public static ObservableCollection<Note> SuggestList(string tableName, string searchText)
+        //public static ObservableCollection<Models.Note> SuggestList(string tableName, string searchText)
         //{
 
         //    string query = $"SELECT * FROM {tableName} WHERE TITLE LIKE  " + "'%" + "@searchText" + "%'" + " ;";
-        //    ObservableCollection<Note> suggested = null;
+        //    ObservableCollection<Models.Note> suggested = null;
         //    SQLiteConnection conn = DBCreation.OpenConnection();
         //    try
         //    {
@@ -80,7 +78,7 @@ namespace YourNoteUWP.Models
         //            while (sqlite_datareader.Read())
         //            {
         //                if (suggested == null)
-        //                    suggested = new ObservableCollection<Note>();
+        //                    suggested = new ObservableCollection<Models.Note>();
         //                Note note = new Note(0, "", "", 0, 0, "");
 
         //                note.noteId = (long)sqlite_datareader.GetValue(1);
@@ -211,9 +209,9 @@ namespace YourNoteUWP.Models
         //  ----------------------------------------HOME PAGE DB FETCHES----------------------------------------  
 
         //Get Suggested Notes
-        public static ObservableCollection<Note> GetSuggestedNotes(string tableName, string userId, string title)
+        public static ObservableCollection<Models.Note> GetSuggestedNotes(string tableName, string userId, string title)
         {
-            ObservableCollection<Note> notes = null;
+            ObservableCollection<Models.Note> notes = null;
             string query = $"SELECT * FROM {tableName} where USERID = @userId AND TITLE like @title ; ";
             string ntitle = "%" + title + "%";
             SQLiteConnection conn = DBCreation.OpenConnection();
@@ -231,7 +229,7 @@ namespace YourNoteUWP.Models
                     while (sqlite_datareader.Read())
                     {
                         if (notes == null)
-                            notes = new ObservableCollection<Note>();
+                            notes = new ObservableCollection<Models.Note>();
                         Note note = new Note(0, "", "", 0, 0, "");
 
                         note.noteId = (long)sqlite_datareader.GetValue(1);
@@ -260,9 +258,9 @@ namespace YourNoteUWP.Models
 
         //Get Personal Notes
 
-        public static ObservableCollection<Note> GetPersonalNotes(string noteTableName, string userId)// Needed
+        public static ObservableCollection<Models.Note> GetPersonalNotes(string noteTableName, string userId)// Needed
         {
-            ObservableCollection<Note> notes = null;
+            ObservableCollection<Models.Note> notes = null;
 
 
             string query = $"SELECT * FROM {noteTableName} WHERE USERID = @userId   ";
@@ -278,7 +276,7 @@ namespace YourNoteUWP.Models
                     while (sqlite_datareader.Read())
                     {
                         if (notes == null)
-                            notes = new ObservableCollection<Note>();
+                            notes = new ObservableCollection<Models.Note>();
                         Note note = new Note(0, "", "", 0, 0, "");
 
                         note.noteId = (long)sqlite_datareader.GetValue(1);
@@ -310,9 +308,9 @@ namespace YourNoteUWP.Models
         }
 
         //Get Shared Notes
-        public static ObservableCollection<Note> GetSharedNotes(string notesTableName, string sharedTableName, string userId)// Needed
+        public static ObservableCollection<Models.Note> GetSharedNotes(string notesTableName, string sharedTableName, string userId)// Needed
         {
-            ObservableCollection<Note> sharedNotes = null;
+            ObservableCollection<Models.Note> sharedNotes = null;
             string query = $"SELECT * FROM {notesTableName} , {sharedTableName}  WHERE NOTEID = SHAREDNOTEID AND SHAREDUSERID = @userId  ORDER BY SEARCHCOUNT DESC ; ";
             SQLiteConnection conn = DBCreation.OpenConnection();
             try
@@ -328,7 +326,7 @@ namespace YourNoteUWP.Models
                     while (sqlite_datareader.Read())
                     {
                         if (sharedNotes == null)
-                            sharedNotes = new ObservableCollection<Note>();
+                            sharedNotes = new ObservableCollection<Models.Note>();
                         Note note = new Note(0, "", "", 0, 0, "");
                         note.noteId = (long)sqlite_datareader.GetValue(1);
                         note.title = sqlite_datareader.GetString(2);
@@ -396,10 +394,10 @@ namespace YourNoteUWP.Models
 
         }
         //It prints all the available suggested to whom we can share the note 
-        public static ObservableCollection<YourNoteUWP.Models.User> ValidUsersToShare(string userTableName, string sharedTableName, string notesTableName, string userId, long noteId)// Needed
+        public static ObservableCollection<UWPYourNoteLibrary.Models.User> ValidUsersToShare(string userTableName, string sharedTableName, string notesTableName, string userId, long noteId)// Needed
         {
             Dictionary<string, bool> sharedUserIds = AlreadySharedUsers(sharedTableName, noteId);
-            ObservableCollection<YourNoteUWP.Models.User> userToShare = new ObservableCollection<Models.User>(); ;
+            ObservableCollection<UWPYourNoteLibrary.Models.User> userToShare = new ObservableCollection<Models.User>(); ;
             string query = $"SELECT * FROM {userTableName} WHERE USERID != @userId ; ";
             SQLiteConnection conn = DBCreation.OpenConnection();
             try
