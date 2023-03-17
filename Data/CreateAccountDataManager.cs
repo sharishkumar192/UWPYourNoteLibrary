@@ -9,19 +9,19 @@ using UWPYourNoteLibrary.Models;
 
 namespace UWPYourNoteLibrary.Data
 {
-    public class AccountCreationDataManager : IAccountCreationDataManager
+    public class CreateAccountDataManager : ICreateAccountDataManager
     {
         private NoteDBHandler noteDBHandler;
         
-        private static AccountCreationDataManager dataManager = null;
-        public static AccountCreationDataManager DataManager
+        private static CreateAccountDataManager dataManager = null;
+        public static CreateAccountDataManager DataManager
         {
 
             get
             {
                 if (dataManager == null)
                 {
-                    dataManager = new AccountCreationDataManager();
+                    dataManager = new CreateAccountDataManager();
 
                 }
                 return dataManager;
@@ -30,7 +30,7 @@ namespace UWPYourNoteLibrary.Data
 
         }
 
-        public void AccountCreation(string name, string email, string password, ICallback<UCAccountCreationResponse> callback) 
+        public void AccountCreation(string name, string email, string password, ICallback<CreateAccountUseCaseResponse> callback) 
         {
             noteDBHandler = NoteDBHandler.NDBHandler;
             bool result = noteDBHandler.InsertNewUser(DBCreation.userTableName, name, email, password);

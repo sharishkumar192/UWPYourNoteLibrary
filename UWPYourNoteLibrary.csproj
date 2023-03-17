@@ -121,14 +121,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
-    <Compile Include="Data\AccountCreationDataManager.cs" />
+    <Compile Include="Data\CreateAccountDataManager.cs" />
     <Compile Include="Data\Handler\Contract\INoteDBHandler.cs" />
     <Compile Include="Data\Handler\DBAdapter.cs" />
     <Compile Include="Data\Handler\NoteDBHandler.cs" />
     <Compile Include="Domain\Contract\IPresenterCallback.cs" />
     <Compile Include="Domain\ICallback.cs" />
-    <Compile Include="Domain\UCAccountCreation.cs" />
-    <Compile Include="Domain\UCBase.cs" />
+    <Compile Include="Domain\CreateAccountUseCase.cs" />
+    <Compile Include="Domain\UseCaseBase.cs" />
     <Compile Include="Models\DBCreation.cs" />
     <Compile Include="Models\DBFetch.cs" />
     <Compile Include="Models\DBUpdation.cs" />

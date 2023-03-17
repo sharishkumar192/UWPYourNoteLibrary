@@ -304,7 +304,7 @@ namespace UWPYourNoteLibrary.Models
         public static void UpdateNoteColor(string tableName, long noteId, long noteColor, string modifiedDay)
         {
             string query = $"UPDATE  {tableName} SET NOTECOLOR = @noteColor, MODIFIEDDAY = @modifiedDay  WHERE NOTEID = @noteId ; ";
-            SQLiteConnection conn = DBAdapter.OpenConnection();
+            SQLiteConnection conn = SQLiteAdapter.OpenConnection();
             try
             {
                 SQLiteCommand command = new SQLiteCommand(query, conn);

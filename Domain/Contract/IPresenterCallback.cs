@@ -7,7 +7,7 @@ using UWPYourNoteLibrary.Domain;
 
 namespace UWPYourNoteLibrary.Domain
 {
-    public interface IPresenterCallback : ICallback<UCAccountCreationResponse>
+    public interface IPresenterCallback : ICallback<CreateAccountUseCaseResponse>
     {
 
     }

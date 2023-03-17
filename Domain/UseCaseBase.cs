@@ -8,7 +8,7 @@ using UWPYourNoteLibrary.Models;
 
 namespace UWPYourNoteLibrary.Domain
 {
-     public abstract class UCBase<T>
+     public abstract class UseCaseBase<T>
     {
         public abstract void Action();
         public void Execute()

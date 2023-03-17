@@ -74,7 +74,7 @@ namespace UWPYourNoteLibrary.Models
       $"CREATIONDAY VARCHAR(27)  ,  " +
       $"MODIFIEDDAY VARCHAR(27)  ,  " +
       $"FOREIGN KEY(USERID) REFERENCES  { DBCreation.userTableName} (USERID) ON DELETE CASCADE)" ;
-            SQLiteConnection conn = DBAdapter.OpenConnection();
+            SQLiteConnection conn = SQLiteAdapter.OpenConnection();
             try
             {
                 SQLiteCommand command = new SQLiteCommand(query, conn);
@@ -103,7 +103,7 @@ namespace UWPYourNoteLibrary.Models
      $"PRIMARY KEY (SHAREDUSERID, SHAREDNOTEID)" +
      $" FOREIGN KEY(SHAREDUSERID) REFERENCES { DBCreation.userTableName} (USERID) ON DELETE CASCADE" +
        $" FOREIGN KEY(SHAREDNOTEID) REFERENCES {DBCreation.notesTableName} (NOTEID) ON DELETE CASCADE)";
-            SQLiteConnection conn = DBAdapter.OpenConnection();
+            SQLiteConnection conn = SQLiteAdapter.OpenConnection();
             try
             {
                 SQLiteCommand command = new SQLiteCommand(query, conn);
