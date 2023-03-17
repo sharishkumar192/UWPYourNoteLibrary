@@ -8,7 +8,7 @@ using Windows.Storage;
 
 namespace UWPYourNoteLibrary.Data.Handler
 {
-    public class DBAdapter
+    public class SQLiteAdapter
     {
         private static SQLiteConnection _sqliteConnection = null;
         public static SQLiteConnection SQLiteConnection

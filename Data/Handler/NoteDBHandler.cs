@@ -33,7 +33,7 @@ namespace UWPYourNoteLibrary.Data.Handler
         public bool InsertNewUser(string tableName, string username, string email, string password)
         {
             bool result = true;
-            conn = DBAdapter.OpenConnection();
+            conn = SQLiteAdapter.OpenConnection();
             try
             {
 
