@@ -16,7 +16,7 @@ namespace UWPYourNoteLibrary.Models
 {
     public class DBFetch
     {
-        private static int _logincount = 2;
+        private  readonly static int _logincount = 2;
 
         // ----------------------------------------SIGN UP PAGE DB FETCHES----------------------------------------
 
@@ -26,7 +26,7 @@ namespace UWPYourNoteLibrary.Models
         
             bool check = false;
             string query = $"SELECT * FROM  {userTableName}  WHERE USERID = @userId ";
-            SQLiteConnection conn = DBCreation.OpenConnection();
+            SQLiteConnection conn  = new  SQLiteConnection() ;
             try
             {
 
@@ -67,7 +67,7 @@ namespace UWPYourNoteLibrary.Models
 
         //    string query = $"SELECT * FROM {tableName} WHERE TITLE LIKE  " + "'%" + "@searchText" + "%'" + " ;";
         //    ObservableCollection<Models.Note> suggested = null;
-        //    SQLiteConnection conn = DBCreation.OpenConnection();
+        //    SQLiteConnection conn  = new  SQLiteConnection() ;
         //    try
         //    {
         //        SQLiteCommand command = new SQLiteCommand(query, conn);
@@ -113,7 +113,7 @@ namespace UWPYourNoteLibrary.Models
            
             string query = $"SELECT * FROM {userTableName} WHERE LOGINCOUNT >= @count ORDER BY LOGINCOUNT DESC; ";
             ObservableCollection<Models.User> users = null;
-            SQLiteConnection conn = DBCreation.OpenConnection();
+            SQLiteConnection conn  = new  SQLiteConnection() ;
             try
             {
                 SQLiteCommand command = new SQLiteCommand(query, conn);
@@ -156,7 +156,7 @@ namespace UWPYourNoteLibrary.Models
             string query1 = $"SELECT * FROM {tableName} WHERE USERID = @userId  AND PASSWORD = @password ; ";
 
             string query2 = $"UPDATE  { tableName}  SET LOGINCOUNT = LOGINCOUNT+1  WHERE USERID = @userId ; ";
-            SQLiteConnection conn = DBCreation.OpenConnection();
+            SQLiteConnection conn  = new  SQLiteConnection() ;
             try
             {
 
@@ -214,7 +214,7 @@ namespace UWPYourNoteLibrary.Models
             ObservableCollection<Models.Note> notes = null;
             string query = $"SELECT * FROM {tableName} where USERID = @userId AND TITLE like @title ; ";
             string ntitle = "%" + title + "%";
-            SQLiteConnection conn = DBCreation.OpenConnection();
+            SQLiteConnection conn  = new  SQLiteConnection() ;
             try
             {
                 SQLiteCommand command = new SQLiteCommand(query, conn);
@@ -230,14 +230,15 @@ namespace UWPYourNoteLibrary.Models
                     {
                         if (notes == null)
                             notes = new ObservableCollection<Models.Note>();
-                        Note note = new Note(0, "", "", 0, 0, "");
-
-                        note.noteId = (long)sqlite_datareader.GetValue(1);
-                        note.title = sqlite_datareader.GetString(2);
-                        note.content = sqlite_datareader.GetString(3);
-                        note.noteColor = (long)sqlite_datareader.GetValue(4);
-                        note.searchCount = (long)sqlite_datareader.GetValue(5);
-                        note.modifiedDay = sqlite_datareader.GetString(7);
+                        Note note = new Note(0, "", "", 0, 0, "")
+                        {
+                            noteId = (long)sqlite_datareader.GetValue(1),
+                            title = sqlite_datareader.GetString(2),
+                            content = sqlite_datareader.GetString(3),
+                            noteColor = (long)sqlite_datareader.GetValue(4),
+                            searchCount = (long)sqlite_datareader.GetValue(5),
+                            modifiedDay = sqlite_datareader.GetString(7)
+                        };
                         notes.Add(note);
 
                     }
@@ -264,7 +265,7 @@ namespace UWPYourNoteLibrary.Models
 
 
             string query = $"SELECT * FROM {noteTableName} WHERE USERID = @userId   ";
-            SQLiteConnection conn = DBCreation.OpenConnection();
+            SQLiteConnection conn  = new  SQLiteConnection() ;
             try
             {
 
@@ -312,7 +313,7 @@ namespace UWPYourNoteLibrary.Models
         {
             ObservableCollection<Models.Note> sharedNotes = null;
             string query = $"SELECT * FROM {notesTableName} , {sharedTableName}  WHERE NOTEID = SHAREDNOTEID AND SHAREDUSERID = @userId  ORDER BY SEARCHCOUNT DESC ; ";
-            SQLiteConnection conn = DBCreation.OpenConnection();
+            SQLiteConnection conn  = new  SQLiteConnection() ;
             try
             {
 
@@ -363,7 +364,7 @@ namespace UWPYourNoteLibrary.Models
             Dictionary<string, bool> sharedUserIds = null;
 
             string query = $"SELECT SHAREDUSERID FROM {tableName} WHERE SHAREDNOTEID = @noteId ; ";
-            SQLiteConnection conn = DBCreation.OpenConnection();
+            SQLiteConnection conn  = new  SQLiteConnection() ;
             try
             {
                 SQLiteCommand command = new SQLiteCommand(query, conn);
@@ -399,7 +400,7 @@ namespace UWPYourNoteLibrary.Models
             Dictionary<string, bool> sharedUserIds = AlreadySharedUsers(sharedTableName, noteId);
             ObservableCollection<UWPYourNoteLibrary.Models.User> userToShare = new ObservableCollection<Models.User>(); ;
             string query = $"SELECT * FROM {userTableName} WHERE USERID != @userId ; ";
-            SQLiteConnection conn = DBCreation.OpenConnection();
+            SQLiteConnection conn  = new  SQLiteConnection() ;
             try
             {
                 SQLiteCommand command = new SQLiteCommand(query, conn);
@@ -442,7 +443,7 @@ namespace UWPYourNoteLibrary.Models
         {
             bool isOwner = false;
             string query = $"SELECT * FROM { tableName } WHERE USERID = @userId AND NOTEID = @noteId ; ";
-            SQLiteConnection conn = DBCreation.OpenConnection();
+            SQLiteConnection conn  = new  SQLiteConnection() ;
             try
             {
                 SQLiteCommand command = new SQLiteCommand(query, conn);

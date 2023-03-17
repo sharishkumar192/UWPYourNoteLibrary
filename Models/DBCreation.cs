@@ -11,7 +11,7 @@ using Windows.Storage;
 using Windows.UI.Xaml;
 using System.Data.SQLite;
 using Windows.UI.Xaml.Media.Animation;
-    
+using UWPYourNoteLibrary.Data.Handler;
 using UWPYourNoteLibrary.Models;
 namespace UWPYourNoteLibrary.Models
 {
@@ -32,30 +32,7 @@ namespace UWPYourNoteLibrary.Models
 
         // Creates an object of SQLiteConnection 
 
-        private static SQLiteConnection _SqliteConnection = null;
-        public static SQLiteConnection SQLiteConnection
-        {
-
-            get
-            {
-                if (_SqliteConnection == null)
-                {
-                    StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-                    _SqliteConnection = new SQLiteConnection("Data Source=" + localFolder.Path + "\\database.db;foreign keys=true; Version = 3;  New = True; Compress = True; ");
-
-                }
-                return _SqliteConnection;
-
-            }
-
-        }
-        public static SQLiteConnection OpenConnection()
-        {
-            StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-            SQLiteConnection sqlite_conn = SQLiteConnection;
-            sqlite_conn.Open();
-            return sqlite_conn;
-        }
+      
 
 
         //Creates The User Table 
@@ -66,7 +43,7 @@ namespace UWPYourNoteLibrary.Models
             $" USERID VARCHAR(10000) PRIMARY KEY," +
             $" PASSWORD VARCHAR(10000)," +
             $" LOGINCOUNT INTEGER DEFAULT 0 )";
-            SQLiteConnection conn = DBCreation.OpenConnection();
+            SQLiteConnection conn  = new  SQLiteConnection() ;
             try
             {
                 SQLiteCommand command = new SQLiteCommand(query, conn);
@@ -97,7 +74,7 @@ namespace UWPYourNoteLibrary.Models
       $"CREATIONDAY VARCHAR(27)  ,  " +
       $"MODIFIEDDAY VARCHAR(27)  ,  " +
       $"FOREIGN KEY(USERID) REFERENCES  { DBCreation.userTableName} (USERID) ON DELETE CASCADE)" ;
-            SQLiteConnection conn = OpenConnection();
+            SQLiteConnection conn = DBAdapter.OpenConnection();
             try
             {
                 SQLiteCommand command = new SQLiteCommand(query, conn);
@@ -126,7 +103,7 @@ namespace UWPYourNoteLibrary.Models
      $"PRIMARY KEY (SHAREDUSERID, SHAREDNOTEID)" +
      $" FOREIGN KEY(SHAREDUSERID) REFERENCES { DBCreation.userTableName} (USERID) ON DELETE CASCADE" +
        $" FOREIGN KEY(SHAREDNOTEID) REFERENCES {DBCreation.notesTableName} (NOTEID) ON DELETE CASCADE)";
-            SQLiteConnection conn = OpenConnection();
+            SQLiteConnection conn = DBAdapter.OpenConnection();
             try
             {
                 SQLiteCommand command = new SQLiteCommand(query, conn);

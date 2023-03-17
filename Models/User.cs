@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using UWPYourNoteLibrary.Domain;
 using Windows.UI.Xaml.Controls;
 
 namespace UWPYourNoteLibrary.Models
@@ -63,10 +64,7 @@ namespace UWPYourNoteLibrary.Models
         }
 
   
-        public static Tuple<Models.User, bool>  ValidateLogInUser(string userId, string password)
-        {
-            return DBFetch.ValidateUser(DBCreation.userTableName, userId, password);
-        }
+   
 
     }
 }

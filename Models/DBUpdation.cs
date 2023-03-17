@@ -1,6 +1,9 @@
 ﻿using Microsoft.Data.Sqlite;
 using System;
 using System.Data.SQLite;
+using UWPYourNoteLibrary.Data;
+using UWPYourNoteLibrary.Data.Handler;
+
 namespace UWPYourNoteLibrary.Models 
 { 
     public class DBUpdation
@@ -9,44 +12,44 @@ namespace UWPYourNoteLibrary.Models
         // ----------------------------------------SIGN UP PAGE DB UPDATION----------------------------------------
 
         //Creates new currentUser 
-        public static void InsertNewUser(Models.User user) //Needed
-        {
-            SQLiteConnection conn = DBCreation.OpenConnection();
-            try
-            {
+        //public static void InsertNewUser(Models.User user) //Needed
+        //{
+        //    SQLiteConnection conn  = new  SQLiteConnection() ;
+        //    try
+        //    {
 
 
-                   string query = $"INSERT INTO {DBCreation.userTableName}(NAME, USERID, PASSWORD) VALUES ( @name, @userId, @password);";
+        //           string query = $"INSERT INTO {DBCreation.userTableName}(NAME, USERID, PASSWORD) VALUES ( @name, @userId, @password);";
 
 
-                SQLiteCommand command = new SQLiteCommand(query, conn);
-                SQLiteParameter[] parameters = new SQLiteParameter[3];
-                //parameters[0] = new SQLiteParameter("@userTableName", DBCreation.userTableName);
-                parameters[0] = new SQLiteParameter("@name", user.name);
-                parameters[1] = new SQLiteParameter("@userId", user.userId);
-                parameters[2] = new SQLiteParameter("@password", user.password);
-                command.Parameters.Add(parameters[0]);
-                command.Parameters.Add(parameters[1]);
-                command.Parameters.Add(parameters[2]);
-                // command.Parameters.Add(parameters[3]);
-                command.ExecuteNonQuery();
-                conn.Close();
+        //        SQLiteCommand command = new SQLiteCommand(query, conn);
+        //        SQLiteParameter[] parameters = new SQLiteParameter[3];
+        //        //parameters[0] = new SQLiteParameter("@userTableName", DBCreation.userTableName);
+        //        parameters[0] = new SQLiteParameter("@name", user.name);
+        //        parameters[1] = new SQLiteParameter("@userId", user.userId);
+        //        parameters[2] = new SQLiteParameter("@password", user.password);
+        //        command.Parameters.Add(parameters[0]);
+        //        command.Parameters.Add(parameters[1]);
+        //        command.Parameters.Add(parameters[2]);
+        //        // command.Parameters.Add(parameters[3]);
+        //        command.ExecuteNonQuery();
+        //        conn.Close();
 
 
 
 
 
-            }
-           catch(Exception e) { Logger.WriteLog(e.Message);  }
-            finally
-            {
-                conn.Close();
+        //    }
+        //   catch(Exception e) { Logger.WriteLog(e.Message);  }
+        //    finally
+        //    {
+        //        conn.Close();
 
-            }
+        //    }
 
-            //sqlite_cmd.CommandText = $"INSERT INTO {DBCreation.userTableName}(UserId, Password,Name) VALUES ('{currentUser.Userid}' , ' " + { currentUser.Password} + "','" + currentUser.Name + "');";
+        //    //sqlite_cmd.CommandText = $"INSERT INTO {DBCreation.userTableName}(UserId, Password,Name) VALUES ('{currentUser.Userid}' , ' " + { currentUser.Password} + "','" + currentUser.Name + "');";
 
-        }
+        //}
 
 
         // ----------------------------------------ACCOUNT PAGE DB UPDATION----------------------------------------
@@ -55,7 +58,7 @@ namespace UWPYourNoteLibrary.Models
         public static long InsertNewNote(string tableName, Note newNote)// Needed 
         {
 
-            SQLiteConnection conn = DBCreation.OpenConnection();
+            SQLiteConnection conn  = new  SQLiteConnection() ;
             long noteId = 0;
             string query1 = $"INSERT INTO {tableName}  (USERID, TITLE, CONTENT, NOTECOLOR, CREATIONDAY, MODIFIEDDAY) VALUES (@userId, @title, @content, @noteColor, @creationDay, @modifiedDay);";
             string query2 = $"SELECT seq FROM sqlite_sequence where name =  '{tableName}' ; ";
@@ -114,7 +117,7 @@ namespace UWPYourNoteLibrary.Models
         public static void InsertSharedNote(string sharedTableName, string sharedUserId, long noteId)// Needed
         {
             string query = $"INSERT INTO {sharedTableName} VALUES (@SHAREDUSERID, @NOTEID);";
-            SQLiteConnection conn = DBCreation.OpenConnection();
+            SQLiteConnection conn  = new  SQLiteConnection() ;
             try
             {
 
@@ -145,7 +148,7 @@ namespace UWPYourNoteLibrary.Models
         public static void UpdateNote(string notesTableName, string title, string content, long noteId, string modifiedDay)// Needed
         {
             string query = $"UPDATE {notesTableName} SET TITLE = @title, CONTENT= @content, MODIFIEDDAY = @modifiedDay WHERE NOTEID = @noteId  ;";
-            SQLiteConnection conn = DBCreation.OpenConnection();
+            SQLiteConnection conn  = new  SQLiteConnection() ;
             try
             {
 
@@ -180,7 +183,7 @@ namespace UWPYourNoteLibrary.Models
         public static void UpdateNoteTitle(string notesTableName, string title, long noteId, string modifiedDay)// Needed
         {
             string query = $"UPDATE {notesTableName} SET TITLE= @title, MODIFIEDDAY = @modifiedDay WHERE NOTEID = @noteId  ;";
-            SQLiteConnection conn = DBCreation.OpenConnection();
+            SQLiteConnection conn  = new  SQLiteConnection() ;
             try
             {
 
@@ -213,7 +216,7 @@ namespace UWPYourNoteLibrary.Models
         public static void UpdateNoteCount(string notesTableName, long searchCount, long noteId)
         {
             string query = $"UPDATE {notesTableName} SET  SEARCHCOUNT = @count  WHERE NOTEID = @noteId  ;";
-            SQLiteConnection conn = DBCreation.OpenConnection();
+            SQLiteConnection conn  = new  SQLiteConnection() ;
             try
             {
 
@@ -242,7 +245,7 @@ namespace UWPYourNoteLibrary.Models
         public static void UpdateNoteContent(string notesTableName, string content, long noteId, string modifiedDay)// Needed
         {
             string query = $"UPDATE {notesTableName} SET  CONTENT= @content, MODIFIEDDAY = @modifiedDay WHERE NOTEID = @noteId  ;";
-            SQLiteConnection conn = DBCreation.OpenConnection();
+            SQLiteConnection conn  = new  SQLiteConnection() ;
             try
             {
 
@@ -275,7 +278,7 @@ namespace UWPYourNoteLibrary.Models
 
             string query = $"DELETE FROM {notesTableName} WHERE NOTEID  = @noteId ; ";
          
-            SQLiteConnection conn = DBCreation.OpenConnection();
+            SQLiteConnection conn  = new  SQLiteConnection() ;
 
             try
             {
@@ -301,7 +304,7 @@ namespace UWPYourNoteLibrary.Models
         public static void UpdateNoteColor(string tableName, long noteId, long noteColor, string modifiedDay)
         {
             string query = $"UPDATE  {tableName} SET NOTECOLOR = @noteColor, MODIFIEDDAY = @modifiedDay  WHERE NOTEID = @noteId ; ";
-            SQLiteConnection conn = DBCreation.OpenConnection();
+            SQLiteConnection conn = DBAdapter.OpenConnection();
             try
             {
                 SQLiteCommand command = new SQLiteCommand(query, conn);

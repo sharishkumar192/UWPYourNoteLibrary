@@ -17,7 +17,7 @@ namespace UWPYourNoteLibrary.Models
 
         protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
         {
-            DataTemplate _returnTemplate = new DataTemplate();
+            DataTemplate _returnTemplate;
             var itemsControl = ItemsControl.ItemsControlFromItemContainer(container);
             ObservableCollection<Models.Note> contents = itemsControl.ItemsSource as ObservableCollection<Models.Note>;
             int count = contents.Count;
