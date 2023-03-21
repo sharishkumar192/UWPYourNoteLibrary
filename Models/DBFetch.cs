@@ -157,52 +157,7 @@ namespace UWPYourNoteLibrary.Models
         //  ----------------------------------------HOME PAGE DB FETCHES----------------------------------------  
 
         //Get Suggested Notes
-        public static ObservableCollection<Models.Note> GetSuggestedNotes(string tableName, string userId, string title)
-        {
-            ObservableCollection<Models.Note> notes = null;
-            string query = $"SELECT * FROM {tableName} where USERID = @userId AND TITLE like @title ; ";
-            string ntitle = "%" + title + "%";
-            SQLiteConnection conn  = SQLiteAdapter.OpenConnection();
-            try
-            {
-                SQLiteCommand command = new SQLiteCommand(query, conn);
-                SQLiteParameter[] parameters = new SQLiteParameter[2];
-                parameters[0] = new SQLiteParameter("@userId", userId);
-                parameters[1] = new SQLiteParameter("@title", ntitle);
-
-                command.Parameters.Add(parameters[0]);
-                command.Parameters.Add(parameters[1]);
-                using (SQLiteDataReader sqlite_datareader = command.ExecuteReader())
-                {
-                    while (sqlite_datareader.Read())
-                    {
-                        if (notes == null)
-                            notes = new ObservableCollection<Models.Note>();
-                        Note note = new Note(0, "", "", 0, 0, "")
-                        {
-                            noteId = (long)sqlite_datareader.GetValue(1),
-                            title = sqlite_datareader.GetString(2),
-                            content = sqlite_datareader.GetString(3),
-                            noteColor = (long)sqlite_datareader.GetValue(4),
-                            searchCount = (long)sqlite_datareader.GetValue(5),
-                            modifiedDay = sqlite_datareader.GetString(7)
-                        };
-                        notes.Add(note);
-
-                    }
-                }
-
-                conn.Close();
-            }
-            catch (Exception e) { Logger.WriteLog(e.Message); }
-            finally
-            {
-                conn.Close();
-
-            }
-            return notes;
-
-        }
+       
 
 
         //Get Personal Notes

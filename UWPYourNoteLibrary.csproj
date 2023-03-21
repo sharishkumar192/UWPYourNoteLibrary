@@ -120,17 +120,20 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="Data\Managers\CheckIfUserExistsEmailDataManager.cs" />
     <Compile Include="Data\Managers\CreateAccountDataManager.cs" />
     <Compile Include="Data\Handler\Contract\IUserDBHandler.cs" />
     <Compile Include="Data\Handler\Adapter\SQLiteAdapter.cs" />
     <Compile Include="Data\Handler\UserDBHandler.cs" />
+    <Compile Include="Data\Managers\GetNotesDataManager.cs" />
+    <Compile Include="Data\Managers\GetSuggestedAndRecentNotesDataManager.cs" />
     <Compile Include="Data\Managers\RecentLogInUseCaseDataManager.cs" />
     <Compile Include="Data\Managers\ValidateCredentialsDataManager.cs" />
     <Compile Include="Domain\Contract\ICallback.cs" />
     <Compile Include="Domain\UseCase\CreateAccountUseCase.cs" />
     <Compile Include="Domain\UseCase\CheckIfUserExistsUseCase.cs" />
+    <Compile Include="Domain\UseCase\GetNotesUseCase.cs" />
+    <Compile Include="Domain\UseCase\GetSuggestedAndRecentNotesUseCase.cs" />
     <Compile Include="Domain\UseCase\UseCaseBase.cs" />
     <Compile Include="Domain\UseCase\RecentLogInUseCase.cs" />
     <Compile Include="Domain\UseCase\ValidateCredentialsUseCase.cs" />
