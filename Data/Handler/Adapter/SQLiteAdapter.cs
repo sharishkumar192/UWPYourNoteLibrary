@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Data.SQLite;
 using Windows.Storage;
 
-namespace UWPYourNoteLibrary.Data.Handler
+namespace UWPYourNoteLibrary.Data.Handler.Adapter
 {
     public class SQLiteAdapter
     {

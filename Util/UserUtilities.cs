@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UWPYourNoteLibrary.Domain;
+using UWPYourNoteLibrary.Domain.Contract;
 
 namespace UWPYourNoteLibrary.Util
 {
@@ -38,7 +40,7 @@ namespace UWPYourNoteLibrary.Util
             return null;
         }
 
-      
+        
 
         public static string CheckValidEmail(string email)
         {
@@ -48,6 +50,8 @@ namespace UWPYourNoteLibrary.Util
 
         }
 
+
+     
   
 
 

@@ -121,14 +121,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
-    <Compile Include="Data\CreateAccountDataManager.cs" />
-    <Compile Include="Data\Handler\Contract\INoteDBHandler.cs" />
-    <Compile Include="Data\Handler\SQLiteAdapter.cs" />
-    <Compile Include="Data\Handler\NoteDBHandler.cs" />
-    <Compile Include="Domain\Contract\IPresenterCallback.cs" />
-    <Compile Include="Domain\ICallback.cs" />
-    <Compile Include="Domain\CreateAccountUseCase.cs" />
-    <Compile Include="Domain\UseCaseBase.cs" />
+    <Compile Include="Data\Managers\CheckIfUserExistsEmailDataManager.cs" />
+    <Compile Include="Data\Managers\CreateAccountDataManager.cs" />
+    <Compile Include="Data\Handler\Contract\IUserDBHandler.cs" />
+    <Compile Include="Data\Handler\Adapter\SQLiteAdapter.cs" />
+    <Compile Include="Data\Handler\UserDBHandler.cs" />
+    <Compile Include="Data\Managers\RecentLogInUseCaseDataManager.cs" />
+    <Compile Include="Data\Managers\ValidateCredentialsDataManager.cs" />
+    <Compile Include="Domain\Contract\ICallback.cs" />
+    <Compile Include="Domain\UseCase\CreateAccountUseCase.cs" />
+    <Compile Include="Domain\UseCase\CheckIfUserExistsUseCase.cs" />
+    <Compile Include="Domain\UseCase\UseCaseBase.cs" />
+    <Compile Include="Domain\UseCase\RecentLogInUseCase.cs" />
+    <Compile Include="Domain\UseCase\ValidateCredentialsUseCase.cs" />
     <Compile Include="Models\DBCreation.cs" />
     <Compile Include="Models\DBFetch.cs" />
     <Compile Include="Models\DBUpdation.cs" />

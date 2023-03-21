@@ -4,8 +4,9 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using UWPYourNoteLibrary.Domain.Contract;
 using UWPYourNoteLibrary.Data;
-using static UWPYourNoteLibrary.Domain.CreateAccountUseCase;
+using UWPYourNoteLibrary.Data.Managers;
 
 namespace UWPYourNoteLibrary.Domain
 {
@@ -13,13 +14,6 @@ namespace UWPYourNoteLibrary.Domain
     {
         void AccountCreation(string name, string email, string password, ICallback<CreateAccountUseCaseResponse> presenterCallback);
     }
-    public interface IUseCaseCallBack<T> : ICallback<T>
-    {
-        void OnSuccess(bool isCreated);
-        void OnFailure(bool isCreated);
-    }
-
-
 
     public sealed class CreateAccountUseCaseRequest
     {
@@ -34,18 +28,22 @@ namespace UWPYourNoteLibrary.Domain
             Password = password;
         }
 
-        public CreateAccountUseCaseRequest(CreateAccountUseCaseRequest old)
-        {
-            Name = old.Name;
-            Email = old.Email;
-            Password = old.Password;
-        }
+        //public CreateAccountUseCaseRequest(CreateAccountUseCaseRequest old)
+        //{
+        //    Name = old.Name;
+        //    Email = old.Email;
+        //    Password = old.Password;
+        //}
     }
 
    
     public sealed class CreateAccountUseCaseResponse
     {
-
+        bool result;
+        public CreateAccountUseCaseResponse(bool result)
+        {
+            this.result = result;
+        }
     }
 
     public class CreateAccountUseCase : UseCaseBase<CreateAccountUseCaseResponse>
@@ -55,11 +53,11 @@ namespace UWPYourNoteLibrary.Domain
         public CreateAccountDataManager AccountCreationDataManager;
         public CreateAccountUseCaseRequest Request { get; set; }
 
-        public IPresenterCallback SignUpPresenterCallback { get; private set; }
-        public CreateAccountUseCase(CreateAccountUseCaseRequest uCAccountCreationRequest, IPresenterCallback callback)
+        public ICallback<CreateAccountUseCaseResponse> SignUpPresenterCallback { get; private set; }
+        public CreateAccountUseCase(CreateAccountUseCaseRequest uCAccountCreationRequest, ICallback<CreateAccountUseCaseResponse> callback)
         {
             AccountCreationDataManager = CreateAccountDataManager.DataManager;
-            Request = new CreateAccountUseCaseRequest(uCAccountCreationRequest); 
+            Request = uCAccountCreationRequest; 
             SignUpPresenterCallback = callback; 
         }
 
@@ -80,14 +78,15 @@ namespace UWPYourNoteLibrary.Domain
                 accountCreation = uCAccountCreation;
             }
 
-            public void onFailure()
+          
+            public void onFailure(CreateAccountUseCaseResponse result)
             {
-                accountCreation.SignUpPresenterCallback.onFailure();
+                accountCreation?.SignUpPresenterCallback?.onFailure(result);
             }
 
-            public void onSuccess()
+            public void onSuccess(CreateAccountUseCaseResponse result)
             {
-                accountCreation.SignUpPresenterCallback.onSuccess();
+                accountCreation?.SignUpPresenterCallback?.onSuccess(result);
             }
         }
 

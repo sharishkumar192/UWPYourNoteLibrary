@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 using UWPYourNoteLibrary.Data.Handler;
 using UWPYourNoteLibrary.Domain;
 using UWPYourNoteLibrary.Models;
-
-namespace UWPYourNoteLibrary.Data
+using UWPYourNoteLibrary.Domain.Contract;
+namespace UWPYourNoteLibrary.Data.Managers
 {
     public class CreateAccountDataManager : ICreateAccountDataManager
     {
-        private NoteDBHandler noteDBHandler;
+        private UserDBHandler noteDBHandler;
         
         private static CreateAccountDataManager dataManager = null;
         public static CreateAccountDataManager DataManager
@@ -32,13 +32,13 @@ namespace UWPYourNoteLibrary.Data
 
         public void AccountCreation(string name, string email, string password, ICallback<CreateAccountUseCaseResponse> callback) 
         {
-            noteDBHandler = NoteDBHandler.NDBHandler;
+            noteDBHandler = UserDBHandler.Handler;
             bool result = noteDBHandler.InsertNewUser(DBCreation.userTableName, name, email, password);
-
+            CreateAccountUseCaseResponse response = new CreateAccountUseCaseResponse(result);
             if(result)
-            callback?.onSuccess();
+            callback?.onSuccess(response);
             else
-            callback.onFailure();
+            callback.onFailure(response);
 
 
         }

@@ -3,6 +3,7 @@ using System;
 using System.Data.SQLite;
 using UWPYourNoteLibrary.Data;
 using UWPYourNoteLibrary.Data.Handler;
+using UWPYourNoteLibrary.Data.Handler.Adapter;
 
 namespace UWPYourNoteLibrary.Models 
 { 

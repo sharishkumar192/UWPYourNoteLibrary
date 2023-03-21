@@ -13,6 +13,8 @@ using System.Data.SQLite;
 using Windows.UI.Xaml.Media.Animation;
 using UWPYourNoteLibrary.Data.Handler;
 using UWPYourNoteLibrary.Models;
+using UWPYourNoteLibrary.Data.Handler.Adapter;
+
 namespace UWPYourNoteLibrary.Models
 {
     public class DBCreation
