@@ -22,14 +22,14 @@ namespace UWPYourNoteLibrary.Domain.UseCase
     }
     public class RecentLogInUseCase : UseCaseBase<RecentLogInUseCaseResponse>
     {
-        public ICallback<RecentLogInUseCaseResponse> RecentLogInCallBack;
+        public ICallback<RecentLogInUseCaseResponse> PresenterCallBack;
         public RecentLogInUseCaseRequest Request { get; set; }
-        public RecentLogInUseCaseDataManager dataManager { get; set; }
+        public RecentLogInUseCaseDataManager DataManager { get; set; }
         public RecentLogInUseCase(RecentLogInUseCaseRequest request, ICallback<RecentLogInUseCaseResponse> callback)
         {
-            dataManager = RecentLogInUseCaseDataManager.DataManager;
+            DataManager = RecentLogInUseCaseDataManager.Singleton;
             Request = request;
-            RecentLogInCallBack = callback;
+            PresenterCallBack = callback;
         }
 
         public interface IRecentLogInUseCaseDataManager<RecentLogInUseCaseResponse>
@@ -40,26 +40,26 @@ namespace UWPYourNoteLibrary.Domain.UseCase
 
         public override void Action()
         {
-            dataManager.RecentLogInUsers(Request.UserId, Request.Password, new RecentLogInUseCaseCallBack(this));
+            DataManager.RecentLogInUsers(Request.UserId, Request.Password, new RecentLogInUseCaseCallBack(this));
         }
 
         private class RecentLogInUseCaseCallBack : ICallback<RecentLogInUseCaseResponse>
         {
-            private RecentLogInUseCase _useCase;
+            private RecentLogInUseCase UseCase;
             public RecentLogInUseCaseCallBack(RecentLogInUseCase useCase)
             {
-                _useCase = useCase;
+                UseCase = useCase;
             }
 
             public void onFailure(RecentLogInUseCaseResponse result)
             {
-                _useCase?.RecentLogInCallBack?.onFailure(result);
+                UseCase?.PresenterCallBack?.onFailure(result);
 
             }
 
             public void onSuccess(RecentLogInUseCaseResponse result)
             {
-                _useCase?.RecentLogInCallBack?.onSuccess(result);
+                UseCase?.PresenterCallBack?.onSuccess(result);
             }
         }
     }

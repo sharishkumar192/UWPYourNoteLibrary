@@ -14,7 +14,7 @@ namespace UWPYourNoteLibrary.Data.Managers
         private UserDBHandler noteDBHandler;
         
         private static CreateAccountDataManager dataManager = null;
-        public static CreateAccountDataManager DataManager
+        public static CreateAccountDataManager Singleton
         {
 
             get
@@ -32,7 +32,7 @@ namespace UWPYourNoteLibrary.Data.Managers
 
         public void AccountCreation(string name, string email, string password, ICallback<CreateAccountUseCaseResponse> callback) 
         {
-            noteDBHandler = UserDBHandler.Handler;
+            noteDBHandler = UserDBHandler.Singleton;
             bool result = noteDBHandler.InsertNewUser(DBCreation.userTableName, name, email, password);
             CreateAccountUseCaseResponse response = new CreateAccountUseCaseResponse(result);
             if(result)

@@ -16,7 +16,7 @@ namespace UWPYourNoteLibrary.Data.Managers
     {
         public IUserDBHandler DBHandler { get; set; }
         private static GetSuggestedAndRecentNotesDataManager dataManager;
-        public static GetSuggestedAndRecentNotesDataManager DataManager
+        public static GetSuggestedAndRecentNotesDataManager Singleton
         {
             get
             {
@@ -29,7 +29,7 @@ namespace UWPYourNoteLibrary.Data.Managers
         }
         public void GetSuggestedAndRecentNotes(string userId, string text, ICallback<GetSuggestedAndRecentNotesUseCaseResponse> callback)
         {
-            DBHandler = UserDBHandler.Handler;
+            DBHandler = UserDBHandler.Singleton;
             ObservableCollection<Note> list = null;
             if(text.Length >=3)
             {
@@ -38,7 +38,7 @@ namespace UWPYourNoteLibrary.Data.Managers
             else
             {
                 
-                IGetNotesUseCaseDataManager dataManager = GetNotesDataManager.DataManager;
+                IGetNotesUseCaseDataManager dataManager = GetNotesDataManager.Singleton;
                 ObservableCollection<Note> tempList = dataManager.GetNotes(userId);
                 tempList.OrderByDescending(note => note.searchCount);
                 if (tempList != null)

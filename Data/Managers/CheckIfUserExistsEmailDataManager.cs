@@ -16,7 +16,7 @@ namespace UWPYourNoteLibrary.Data.Managers
     {
         public IUserDBHandler userDBHandler { get; set; }
         private static CheckIfUserExistsEmailDataManager checkIf;
-        public  static CheckIfUserExistsEmailDataManager DataManager
+        public  static CheckIfUserExistsEmailDataManager Singleton
         {
             get
             {
@@ -29,7 +29,7 @@ namespace UWPYourNoteLibrary.Data.Managers
         }
         public void CheckIfExistingEmail(string email, ICallback<CheckIfUserExistsUseCaseResponse> useCaseCallBack)
         {
-            userDBHandler = UserDBHandler.Handler;
+            userDBHandler = UserDBHandler.Singleton;
 
             bool isExist = userDBHandler.CheckIfExistingEmail(DBCreation.userTableName, email);
             CheckIfUserExistsUseCaseResponse checkIfExistingEmailUseCaseRequest = new CheckIfUserExistsUseCaseResponse();

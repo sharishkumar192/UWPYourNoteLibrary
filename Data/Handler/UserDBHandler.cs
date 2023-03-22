@@ -19,7 +19,7 @@ namespace UWPYourNoteLibrary.Data.Handler
         private SQLiteConnection conn = null;
         private static UserDBHandler _userDBHandler = null;
 
-        public static UserDBHandler Handler
+        public static UserDBHandler Singleton
         {
 
             get

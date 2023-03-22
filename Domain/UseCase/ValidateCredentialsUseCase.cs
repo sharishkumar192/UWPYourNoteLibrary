@@ -27,14 +27,14 @@ namespace UWPYourNoteLibrary.Domain.UseCase
     }
     public class ValidateCredentialsUseCase : UseCaseBase<ValidateCredentialsUseCaseResponse>
     {
-        public ICallback<ValidateCredentialsUseCaseResponse> ValidateCredentialsCallBack;
+        public ICallback<ValidateCredentialsUseCaseResponse> PresenterCallBack;
         public ValidateCredentialsUseCaseRequest Request { get; set; }
-        public ValidateCredentialsDataManager dataManager { get; set; }
+        public ValidateCredentialsDataManager DataManager { get; set; }
         public ValidateCredentialsUseCase(ValidateCredentialsUseCaseRequest request, ICallback<ValidateCredentialsUseCaseResponse> callback)
         {
-            dataManager = ValidateCredentialsDataManager.DataManager;
+            DataManager = ValidateCredentialsDataManager.Singleton;
             Request = request;
-            ValidateCredentialsCallBack = callback;
+            PresenterCallBack = callback;
         }
 
         public interface IValidateCredentialsDataManager<ValidateCredentialsUseCaseResponse>
@@ -45,26 +45,26 @@ namespace UWPYourNoteLibrary.Domain.UseCase
 
         public override void Action()
         {
-            dataManager.ValidateCredentials(Request.UserId, Request.Password, new ValidateCredentialsUseCaseCallBack(this));
+            DataManager.ValidateCredentials(Request.UserId, Request.Password, new ValidateCredentialsUseCaseCallBack(this));
         }
 
         private class ValidateCredentialsUseCaseCallBack : ICallback<ValidateCredentialsUseCaseResponse>
         {
-            private ValidateCredentialsUseCase _useCase;
+            private ValidateCredentialsUseCase UseCase;
             public ValidateCredentialsUseCaseCallBack(ValidateCredentialsUseCase useCase)
             {
-                _useCase = useCase;
+                UseCase = useCase;
             }
 
             public void onFailure(ValidateCredentialsUseCaseResponse result)
             {
-              _useCase?.ValidateCredentialsCallBack?.onFailure(result);
+              UseCase?.PresenterCallBack?.onFailure(result);
 
             }
 
             public void onSuccess(ValidateCredentialsUseCaseResponse result)
             {
-               _useCase?.ValidateCredentialsCallBack?.onSuccess(result);
+               UseCase?.PresenterCallBack?.onSuccess(result);
             }
         }
     }

@@ -50,43 +50,43 @@ namespace UWPYourNoteLibrary.Domain
     {
 
 
-        public CreateAccountDataManager AccountCreationDataManager;
+        public CreateAccountDataManager DataManager;
         public CreateAccountUseCaseRequest Request { get; set; }
 
-        public ICallback<CreateAccountUseCaseResponse> SignUpPresenterCallback { get; private set; }
+        public ICallback<CreateAccountUseCaseResponse> PresenterCallBack { get; set; }
         public CreateAccountUseCase(CreateAccountUseCaseRequest uCAccountCreationRequest, ICallback<CreateAccountUseCaseResponse> callback)
         {
-            AccountCreationDataManager = CreateAccountDataManager.DataManager;
+            DataManager = CreateAccountDataManager.Singleton;
             Request = uCAccountCreationRequest; 
-            SignUpPresenterCallback = callback; 
+            PresenterCallBack = callback; 
         }
 
  
 
         public override void Action()
         {
-            AccountCreationDataManager.AccountCreation(Request.Name, Request.Email, Request.Password, new UseCaseCallBack(this));
+            DataManager.AccountCreation(Request.Name, Request.Email, Request.Password, new UseCaseCallBack(this));
         }
 
 
         private class UseCaseCallBack : ICallback<CreateAccountUseCaseResponse>
         {
             
-            private CreateAccountUseCase accountCreation;
-            public UseCaseCallBack(CreateAccountUseCase uCAccountCreation)
+            private CreateAccountUseCase UseCase;
+            public UseCaseCallBack(CreateAccountUseCase useCase)
             {
-                accountCreation = uCAccountCreation;
+                UseCase = useCase;
             }
 
           
             public void onFailure(CreateAccountUseCaseResponse result)
             {
-                accountCreation?.SignUpPresenterCallback?.onFailure(result);
+                UseCase?.PresenterCallBack?.onFailure(result);
             }
 
             public void onSuccess(CreateAccountUseCaseResponse result)
             {
-                accountCreation?.SignUpPresenterCallback?.onSuccess(result);
+                UseCase?.PresenterCallBack?.onSuccess(result);
             }
         }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
@@ -11,6 +12,13 @@ namespace UWPYourNoteLibrary.Util
 {
     public class NotesUtilities
     {
+        public enum TypeOfNote
+        {
+            PersonalNotes,
+            SharedNotes,
+            AllNotes
+        }
+
 
         public static Dictionary<int, string> noteColorStyle = new Dictionary<int, string>()
         {

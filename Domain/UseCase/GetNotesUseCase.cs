@@ -8,19 +8,20 @@ using UWPYourNoteLibrary.Domain.Contract;
 using UWPYourNoteLibrary.Models;
 
 using UWPYourNoteLibrary.Data.Managers;
+using static UWPYourNoteLibrary.Util.NotesUtilities;
 
 namespace UWPYourNoteLibrary.Domain.UseCase
 {
     public interface IGetNotesUseCaseDataManager
     {
-        void GetNotes(string userId, string type, bool IsSort, ICallback<GetNotesUseCaseResponse> callback);
+        void GetNotes(string userId, TypeOfNote type, bool IsSort, ICallback<GetNotesUseCaseResponse> callback);
         ObservableCollection<Note> GetNotes(string userId);
     }
     public class GetNotesUseCaseRequest
     {
         public string UserId { get; set; }
         public bool IsSort { get; set; }
-        public string Type { get; set; }
+        public TypeOfNote Type { get; set; }
     }
 
     public class GetNotesUseCaseResponse
@@ -34,13 +35,13 @@ namespace UWPYourNoteLibrary.Domain.UseCase
     {
         public GetNotesUseCaseRequest Request { get; set; }
         public GetNotesDataManager DataManager { get; set; }
-        public ICallback<GetNotesUseCaseResponse> GetNotesVMCallback { get; set; }
+        public ICallback<GetNotesUseCaseResponse> PresenterCallBack { get; set; }
 
         public GetNotesUseCase(GetNotesUseCaseRequest request, ICallback<GetNotesUseCaseResponse> callback)
         {
             Request = request;
-            DataManager = GetNotesDataManager.DataManager;
-            GetNotesVMCallback = callback;
+            DataManager = GetNotesDataManager.Singleton;
+            PresenterCallBack = callback;
         }
 
         public override void Action()
@@ -51,20 +52,20 @@ namespace UWPYourNoteLibrary.Domain.UseCase
 
         private class GetNotesUseCaseCallBack : ICallback<GetNotesUseCaseResponse>
         {
-            private GetNotesUseCase _useCase;
+            private GetNotesUseCase UseCase;
 
             public GetNotesUseCaseCallBack(GetNotesUseCase useCase)
             {
-                _useCase = useCase;
+                UseCase = useCase;
             }
             public void onFailure(GetNotesUseCaseResponse result)
             {
-                _useCase?.GetNotesVMCallback?.onFailure(result);
+                UseCase?.PresenterCallBack?.onFailure(result);
             }
 
             public void onSuccess(GetNotesUseCaseResponse result)
             {
-                _useCase?.GetNotesVMCallback?.onSuccess(result);
+                UseCase?.PresenterCallBack?.onSuccess(result);
             }
         }
     }

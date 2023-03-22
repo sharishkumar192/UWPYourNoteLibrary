@@ -23,7 +23,7 @@ namespace UWPYourNoteLibrary.Domain
     public class CheckIfUserExistsUseCase : UseCaseBase<CheckIfUserExistsUseCaseResponse>
     {
         public CheckIfUserExistsUseCaseRequest Request { get; set; }
-        public ICallback<CheckIfUserExistsUseCaseResponse> IsExistingUserCallback { get; set; }
+        public ICallback<CheckIfUserExistsUseCaseResponse> PresenterCallBack { get; set; }
 
         public interface ICheckIfUserExistsEmailDataManager<CheckIfUserExistsUseCaseResponse>
         {
@@ -31,34 +31,34 @@ namespace UWPYourNoteLibrary.Domain
         }
         public override void Action()
         {
-            checkIfExistingEmailDataManager.CheckIfExistingEmail(Request.Email , new CheckIfExistingEmailUseCaseCallBack(this));
+            DataManager.CheckIfExistingEmail(Request.Email , new CheckIfExistingEmailUseCaseCallBack(this));
         }
 
-        public ICheckIfUserExistsEmailDataManager<CheckIfUserExistsUseCaseResponse> checkIfExistingEmailDataManager;
+        public ICheckIfUserExistsEmailDataManager<CheckIfUserExistsUseCaseResponse> DataManager;
         public CheckIfUserExistsUseCase(CheckIfUserExistsUseCaseRequest request, ICallback<CheckIfUserExistsUseCaseResponse> callback)
         {
-            checkIfExistingEmailDataManager = CheckIfUserExistsEmailDataManager.DataManager;
-           IsExistingUserCallback = callback;
+            DataManager = CheckIfUserExistsEmailDataManager.Singleton;
+           PresenterCallBack = callback;
            Request = request;
 
         }
 
         private class CheckIfExistingEmailUseCaseCallBack : ICallback<CheckIfUserExistsUseCaseResponse>
         {
-            CheckIfUserExistsUseCase checkIfExistingEmail;
-            public CheckIfExistingEmailUseCaseCallBack(CheckIfUserExistsUseCase checkIfExistingEmail)
+            CheckIfUserExistsUseCase UseCase;
+            public CheckIfExistingEmailUseCaseCallBack(CheckIfUserExistsUseCase useCase)
             {
-                this.checkIfExistingEmail = checkIfExistingEmail;
+               UseCase = useCase;
             }   
 
             public void onFailure(CheckIfUserExistsUseCaseResponse result)
             {
-                checkIfExistingEmail?.IsExistingUserCallback?.onFailure(result);
+                UseCase?.PresenterCallBack?.onFailure(result);
             }
 
             public void onSuccess(CheckIfUserExistsUseCaseResponse result)
             {
-                checkIfExistingEmail?.IsExistingUserCallback?.onSuccess(result);   
+                UseCase?.PresenterCallBack?.onSuccess(result);   
             }
         }
     }

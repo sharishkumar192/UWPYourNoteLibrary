@@ -10,6 +10,8 @@ using UWPYourNoteLibrary.Domain;
 using UWPYourNoteLibrary.Domain.UseCase;
 using UWPYourNoteLibrary.Models;
 using System.Collections.ObjectModel;
+using UWPYourNoteLibrary.Util;
+using static UWPYourNoteLibrary.Util.NotesUtilities;
 
 namespace UWPYourNoteLibrary.Data.Managers
 {
@@ -17,7 +19,7 @@ namespace UWPYourNoteLibrary.Data.Managers
     {
         public IUserDBHandler DBHandler { get; set; }
         private static GetNotesDataManager dataManager;
-        public static GetNotesDataManager DataManager
+        public static GetNotesDataManager Singleton
         {
             get
             {
@@ -28,16 +30,17 @@ namespace UWPYourNoteLibrary.Data.Managers
                 return dataManager;
             }
         }
-        public void GetNotes(string userId, string type, bool IsSort, ICallback<GetNotesUseCaseResponse> callback)
+        public void GetNotes(string userId, TypeOfNote type, bool IsSort, ICallback<GetNotesUseCaseResponse> callback)
         {
-            DBHandler = UserDBHandler.Handler;
+            DBHandler = UserDBHandler.Singleton;
             ObservableCollection<Note> list = null;
-            if (type.CompareTo("PersonalNotes") == 0)
-                list = DBHandler.GetPersonalNotes(DBCreation.notesTableName, userId);
-            else if (type.CompareTo("SharedNotes") == 0)
-                list = DBHandler.GetSharedNotes(DBCreation.notesTableName, DBCreation.sharedTableName, userId);
-            else
-                list = DBHandler.GetAllNotes(DBCreation.notesTableName, DBCreation.sharedTableName, userId);
+            switch(type)
+            {
+                case TypeOfNote.PersonalNotes: list = DBHandler.GetPersonalNotes(DBCreation.notesTableName, userId); break;
+                case TypeOfNote.SharedNotes:   list = DBHandler.GetSharedNotes(DBCreation.notesTableName, DBCreation.sharedTableName, userId); break;
+                case TypeOfNote.AllNotes : list = DBHandler.GetAllNotes(DBCreation.notesTableName, DBCreation.sharedTableName, userId); break;
+                default: list = null; break;
+            }
             GetNotesUseCaseResponse response = new GetNotesUseCaseResponse();
             response.List = list;
             response.IsSort = IsSort;
@@ -50,7 +53,7 @@ namespace UWPYourNoteLibrary.Data.Managers
         }
         public ObservableCollection<Note> GetNotes(string userId)
         {
-            DBHandler = UserDBHandler.Handler;
+            DBHandler = UserDBHandler.Singleton;
             ObservableCollection<Note> list = DBHandler.GetAllNotes(DBCreation.notesTableName, DBCreation.sharedTableName, userId);
             return list;
 

@@ -16,7 +16,7 @@ namespace UWPYourNoteLibrary.Data.Handler
     {
         private static ValidateCredentialsDataManager validate;
         public IUserDBHandler userDBHandler { get; set; }
-        public static ValidateCredentialsDataManager DataManager
+        public static ValidateCredentialsDataManager Singleton
         {
             get
             {
@@ -29,7 +29,7 @@ namespace UWPYourNoteLibrary.Data.Handler
         }
         public void ValidateCredentials(string username, string password, ICallback<ValidateCredentialsUseCaseResponse> callback)
         {
-            userDBHandler = UserDBHandler.Handler;
+            userDBHandler = UserDBHandler.Singleton;
             Models.User user= userDBHandler.ValidateUser(DBCreation.userTableName, username, password);
             ValidateCredentialsUseCaseResponse response = new ValidateCredentialsUseCaseResponse();
             response.user = user;

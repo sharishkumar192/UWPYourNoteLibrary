@@ -19,7 +19,7 @@ namespace UWPYourNoteLibrary.Data.Managers
         public IUserDBHandler userDBHandler { get; set; }
         private static RecentLogInUseCaseDataManager login;
 
-        public static RecentLogInUseCaseDataManager DataManager
+        public static RecentLogInUseCaseDataManager Singleton
         {
             get
             {
@@ -32,7 +32,7 @@ namespace UWPYourNoteLibrary.Data.Managers
         }
         public void RecentLogInUsers(string userId, string password, ICallback<RecentLogInUseCaseResponse> useCaseCallBack)
         {
-            userDBHandler = UserDBHandler.Handler;
+            userDBHandler = UserDBHandler.Singleton;
             ObservableCollection<Models.User> recentList = userDBHandler.RecentLoggedInUsers(DBCreation.userTableName);
             RecentLogInUseCaseResponse response = new RecentLogInUseCaseResponse();
             response.List = recentList;

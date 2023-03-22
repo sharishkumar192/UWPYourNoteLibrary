@@ -23,21 +23,19 @@ namespace UWPYourNoteLibrary.Domain.UseCase
     public class GetSuggestedAndRecentNotesUseCaseResponse
     {
         public ObservableCollection<Note> List { get; set; }
-    
-
     }
 
     public class GetSuggestedAndRecentNotesUseCase : UseCaseBase<GetSuggestedAndRecentNotesUseCaseResponse>
     {
         public GetSuggestedAndRecentNotesUseCaseRequest Request { get; set; }
         public GetSuggestedAndRecentNotesDataManager DataManager { get; set; }
-        public ICallback<GetSuggestedAndRecentNotesUseCaseResponse> GetSuggestedAndRecentNotesVMCallback { get; set; }
+        public ICallback<GetSuggestedAndRecentNotesUseCaseResponse> PresenterCallBack { get; set; }
 
         public GetSuggestedAndRecentNotesUseCase(GetSuggestedAndRecentNotesUseCaseRequest request, ICallback<GetSuggestedAndRecentNotesUseCaseResponse> callback)
         {
             Request = request;
-            DataManager = GetSuggestedAndRecentNotesDataManager.DataManager;
-            GetSuggestedAndRecentNotesVMCallback = callback;
+            DataManager = GetSuggestedAndRecentNotesDataManager.Singleton;
+            PresenterCallBack = callback;
         }
 
         public override void Action()
@@ -48,20 +46,20 @@ namespace UWPYourNoteLibrary.Domain.UseCase
 
         private class GetSuggestedAndRecentNotesUseCaseCallBack : ICallback<GetSuggestedAndRecentNotesUseCaseResponse>
         {
-            private GetSuggestedAndRecentNotesUseCase _useCase;
+            private GetSuggestedAndRecentNotesUseCase UseCase;
 
             public GetSuggestedAndRecentNotesUseCaseCallBack(GetSuggestedAndRecentNotesUseCase useCase)
             {
-                _useCase = useCase;
+                UseCase = useCase;
             }
             public void onFailure(GetSuggestedAndRecentNotesUseCaseResponse result)
             {
-                _useCase?.GetSuggestedAndRecentNotesVMCallback?.onFailure(result);
+                UseCase?.PresenterCallBack?.onFailure(result);
             }
 
             public void onSuccess(GetSuggestedAndRecentNotesUseCaseResponse result)
             {
-                _useCase?.GetSuggestedAndRecentNotesVMCallback?.onSuccess(result);
+                UseCase?.PresenterCallBack?.onSuccess(result);
             }
         }
     }
