@@ -28,6 +28,11 @@ namespace UWPYourNoteLibrary.Data.Handler.Contract
         ObservableCollection<Note> GetAllNotes(string notesTableName, string sharedTableName, string userId);
 
         ObservableCollection<Note> GetAllRecentNotes(string notesTableName, string sharedTableName, string userId);
+        bool InsertSharedNote(string tableName, string sharedUserId, long noteId);
+
+        bool DeleteNote(string notesTableName, long noteId);
+
+
 
     }
 }

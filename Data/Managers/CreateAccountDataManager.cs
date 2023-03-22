@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using UWPYourNoteLibrary.Data.Handler;
 using UWPYourNoteLibrary.Domain;
 using UWPYourNoteLibrary.Models;
+using UWPYourNoteLibrary.Util;
 using UWPYourNoteLibrary.Domain.Contract;
 namespace UWPYourNoteLibrary.Data.Managers
 {
@@ -33,7 +34,7 @@ namespace UWPYourNoteLibrary.Data.Managers
         public void AccountCreation(string name, string email, string password, ICallback<CreateAccountUseCaseResponse> callback) 
         {
             noteDBHandler = UserDBHandler.Singleton;
-            bool result = noteDBHandler.InsertNewUser(DBCreation.userTableName, name, email, password);
+            bool result = noteDBHandler.InsertNewUser(UserUtilities.userTableName, name, email, password);
             CreateAccountUseCaseResponse response = new CreateAccountUseCaseResponse(result);
             if(result)
             callback?.onSuccess(response);

@@ -9,7 +9,7 @@ using UWPYourNoteLibrary.Data.Handler;
 using UWPYourNoteLibrary.Domain.Contract;
 using UWPYourNoteLibrary.Domain.UseCase;
 using UWPYourNoteLibrary.Models;
-
+using UWPYourNoteLibrary.Util;
 namespace UWPYourNoteLibrary.Data.Managers
 {
     public class CreateNewNoteDataManager : ICreateNewNoteUseCaseDataManager
@@ -30,7 +30,7 @@ namespace UWPYourNoteLibrary.Data.Managers
         public void CreateNewNote(Note newNote, ICallback<CreateNewNoteUseCaseResponse> callback)
         {
             DBHandler = NoteDBHandler.Singleton;
-            long noteId = DBHandler.CreateNewNote(DBCreation.notesTableName, newNote);
+            long noteId = DBHandler.CreateNewNote(NotesUtilities.notesTableName, newNote);
 
             CreateNewNoteUseCaseResponse response = new CreateNewNoteUseCaseResponse();
             response.NoteId = noteId;

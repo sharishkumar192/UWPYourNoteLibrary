@@ -36,9 +36,9 @@ namespace UWPYourNoteLibrary.Data.Managers
             ObservableCollection<Note> list = null;
             switch(type)
             {
-                case TypeOfNote.PersonalNotes: list = DBHandler.GetPersonalNotes(DBCreation.notesTableName, userId); break;
-                case TypeOfNote.SharedNotes:   list = DBHandler.GetSharedNotes(DBCreation.notesTableName, DBCreation.sharedTableName, userId); break;
-                case TypeOfNote.AllNotes : list = DBHandler.GetAllNotes(DBCreation.notesTableName, DBCreation.sharedTableName, userId); break;
+                case TypeOfNote.PersonalNotes: list = DBHandler.GetPersonalNotes(NotesUtilities.notesTableName, userId); break;
+                case TypeOfNote.SharedNotes:   list = DBHandler.GetSharedNotes(NotesUtilities.notesTableName, NotesUtilities.sharedTableName, userId); break;
+                case TypeOfNote.AllNotes : list = DBHandler.GetAllNotes(NotesUtilities.notesTableName, NotesUtilities.sharedTableName, userId); break;
                 default: list = null; break;
             }
             GetNotesUseCaseResponse response = new GetNotesUseCaseResponse();
@@ -54,7 +54,7 @@ namespace UWPYourNoteLibrary.Data.Managers
         public ObservableCollection<Note> GetRecentNotes(string userId)
         {
             DBHandler = NoteDBHandler.Singleton;
-            ObservableCollection<Note> list = DBHandler.GetAllRecentNotes(DBCreation.notesTableName, DBCreation.sharedTableName, userId);
+            ObservableCollection<Note> list = DBHandler.GetAllRecentNotes(NotesUtilities.notesTableName, NotesUtilities.sharedTableName, userId);
             return list;
 
         }

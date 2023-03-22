@@ -7,7 +7,8 @@ using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using Windows.UI.StartScreen;
 using System.Linq;
-
+using System.Diagnostics;
+using UWPYourNoteLibrary.Util;
 namespace UWPYourNoteLibrary.Data.Handler
 {
     public class NoteDBHandler : INoteDBHandler
@@ -30,7 +31,68 @@ namespace UWPYourNoteLibrary.Data.Handler
             }
 
         }
-        public long CreateNewNote(string tableName, Note newNote)
+        public static void CreateNotesTable()
+        {
+            string query = $"CREATE TABLE IF NOT EXISTS {NotesUtilities.notesTableName}" +
+      $"(USERID VARCHAR(10000)," +
+      $"NOTEID INTEGER PRIMARY KEY AUTOINCREMENT," +
+      $"TITLE VARCHAR(10000)," +
+      $"CONTENT TEXT, " +
+      $"NOTECOLOR INTEGER DEFAULT 0 ,  " +
+      $"SEARCHCOUNT INTEGER DEFAULT 0  ,  " +
+      $"CREATIONDAY VARCHAR(27)  ,  " +
+      $"MODIFIEDDAY VARCHAR(27)  ,  " +
+      $"FOREIGN KEY(USERID) REFERENCES  {UserUtilities.userTableName} (USERID) ON DELETE CASCADE)";
+            SQLiteConnection conn = SQLiteAdapter.OpenConnection();
+            try
+            {
+                SQLiteCommand command = new SQLiteCommand(query, conn);
+                command.ExecuteNonQuery();
+                conn.Close();
+
+
+            }
+            catch (Exception e) { Logger.WriteLog(e.Message); }
+
+            finally
+            {
+                conn.Close();
+
+            }
+
+        }
+
+        //Creates The Shared Table 
+
+        public static void SharedNotesTableCreation()
+        {
+            string query = $"CREATE TABLE IF NOT EXISTS {NotesUtilities.sharedTableName}" +
+     $"(SHAREDUSERID VARCHAR(10000) ,  " +
+     $"SHAREDNOTEID INTEGER ," +
+     $"PRIMARY KEY (SHAREDUSERID, SHAREDNOTEID)" +
+     $" FOREIGN KEY(SHAREDUSERID) REFERENCES {UserUtilities.userTableName} (USERID) ON DELETE CASCADE" +
+       $" FOREIGN KEY(SHAREDNOTEID) REFERENCES {NotesUtilities.notesTableName} (NOTEID) ON DELETE CASCADE)";
+            SQLiteConnection conn = SQLiteAdapter.OpenConnection();
+            try
+            {
+                SQLiteCommand command = new SQLiteCommand(query, conn);
+                command.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+            finally
+            {
+                conn.Close();
+
+            }
+
+        }
+    
+
+    public long CreateNewNote(string tableName, Note newNote)
         {
             conn = SQLiteAdapter.OpenConnection();
             long noteId = -1;
@@ -80,7 +142,7 @@ namespace UWPYourNoteLibrary.Data.Handler
         {
             bool result = true;
             string query = $"UPDATE {notesTableName} SET  CONTENT= @content, MODIFIEDDAY = @modifiedDay WHERE NOTEID = @noteId  ;";
-         conn = SQLiteAdapter.OpenConnection();
+            conn = SQLiteAdapter.OpenConnection();
             try
             {
 
@@ -111,9 +173,10 @@ namespace UWPYourNoteLibrary.Data.Handler
         }
 
         public bool UpdateNote(string notesTableName, Note noteToUpdate)// Needed
-        {   bool result = true;
+        {
+            bool result = true;
             string query = $"UPDATE {notesTableName} SET TITLE = @title, CONTENT= @content, MODIFIEDDAY = @modifiedDay WHERE NOTEID = @noteId  ;";
-         conn = SQLiteAdapter.OpenConnection();
+            conn = SQLiteAdapter.OpenConnection();
             try
             {
 
@@ -153,7 +216,7 @@ namespace UWPYourNoteLibrary.Data.Handler
         {
             bool result = true;
             string query = $"UPDATE {notesTableName} SET TITLE= @title, MODIFIEDDAY = @modifiedDay WHERE NOTEID = @noteId  ;";
-         conn = SQLiteAdapter.OpenConnection();
+            conn = SQLiteAdapter.OpenConnection();
             try
             {
 
@@ -300,10 +363,10 @@ namespace UWPYourNoteLibrary.Data.Handler
         public ObservableCollection<Note> GetAllRecentNotes(string notesTableName, string sharedTableName, string userId)
         {
 
-            ObservableCollection<Note> allRecentNotes = null ;
+            ObservableCollection<Note> allRecentNotes = null;
             ObservableCollection<Note> tempList = GetAllNotes(notesTableName, sharedTableName, userId);
             tempList.OrderByDescending(note => note.searchCount);
-            
+
             if (tempList != null)
             {
                 foreach (Note note in tempList)
@@ -368,7 +431,72 @@ namespace UWPYourNoteLibrary.Data.Handler
 
         }
 
+        public bool InsertSharedNote(string sharedTableName, string sharedUserId, long noteId)// Needed
+        {
+            bool result = true;
+            string query = $"INSERT INTO {sharedTableName} VALUES (@SHAREDUSERID, @NOTEID);";
+            conn = SQLiteAdapter.OpenConnection();
+            try
+            {
 
 
+                SQLiteCommand command = new SQLiteCommand(query, conn);
+                SQLiteParameter[] parameters = new SQLiteParameter[2];
+                parameters[0] = new SQLiteParameter("@sharedUserId", sharedUserId);
+                parameters[1] = new SQLiteParameter("@noteId", noteId);
+                command.Parameters.Add(parameters[0]);
+                command.Parameters.Add(parameters[1]);
+                command.ExecuteNonQuery();
+                conn.Close();
+
+
+
+
+
+
+            }
+            catch (Exception e)
+            {
+                result = false;
+                Logger.WriteLog(e.Message);
+            }
+            finally
+            {
+                conn.Close();
+
+            }
+            return result;
+        }
+
+        //Delete the Note
+        public bool DeleteNote(string notesTableName, long noteId)// Needed 
+        {
+            bool result = true;
+
+            string query = $"DELETE FROM {notesTableName} WHERE NOTEID  = @noteId ; ";
+
+            conn = SQLiteAdapter.OpenConnection();
+
+            try
+            {
+                SQLiteCommand command = new SQLiteCommand(query, conn);
+                SQLiteParameter parameters = new SQLiteParameter("@noteId", noteId);
+                command.Parameters.Add(parameters);
+                command.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                result = false;
+                Logger.WriteLog(e.Message);
+            }
+            finally
+            {
+                conn.Close();
+
+            }
+            return result;
+
+
+        }
     }
 }

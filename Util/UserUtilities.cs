@@ -10,6 +10,8 @@ namespace UWPYourNoteLibrary.Util
 {
     public class UserUtilities
     {
+        public static string userTableName = "UserTable";
+
         public static string CheckLength(string email)
         {
             if (email.Length < 2)

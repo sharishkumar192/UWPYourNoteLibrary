@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using UWPYourNoteLibrary.Domain;
 using Windows.UI.Xaml.Controls;
-
+using UWPYourNoteLibrary.Util;
 namespace UWPYourNoteLibrary.Models
 {
    public class User
@@ -60,7 +60,7 @@ namespace UWPYourNoteLibrary.Models
 
         public static ObservableCollection<Models.User> GetFrequentUsers()
         {
-           return DBFetch.FrequentLoggedUsers(DBCreation.userTableName);
+           return DBFetch.FrequentLoggedUsers(UserUtilities.userTableName);
         }
 
   

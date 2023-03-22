@@ -20,12 +20,12 @@ namespace UWPYourNoteLibrary.Models
         //    {
 
 
-        //           string query = $"INSERT INTO {DBCreation.userTableName}(NAME, USERID, PASSWORD) VALUES ( @name, @userId, @password);";
+        //           string query = $"INSERT INTO {UserUtilities.userTableName}(NAME, USERID, PASSWORD) VALUES ( @name, @userId, @password);";
 
 
         //        SQLiteCommand command = new SQLiteCommand(query, conn);
         //        SQLiteParameter[] parameters = new SQLiteParameter[3];
-        //        //parameters[0] = new SQLiteParameter("@userTableName", DBCreation.userTableName);
+        //        //parameters[0] = new SQLiteParameter("@userTableName", UserUtilities.userTableName);
         //        parameters[0] = new SQLiteParameter("@name", user.name);
         //        parameters[1] = new SQLiteParameter("@userId", user.userId);
         //        parameters[2] = new SQLiteParameter("@password", user.password);
@@ -48,7 +48,7 @@ namespace UWPYourNoteLibrary.Models
 
         //    }
 
-        //    //sqlite_cmd.CommandText = $"INSERT INTO {DBCreation.userTableName}(UserId, Password,Name) VALUES ('{currentUser.Userid}' , ' " + { currentUser.Password} + "','" + currentUser.Name + "');";
+        //    //sqlite_cmd.CommandText = $"INSERT INTO {UserUtilities.userTableName}(UserId, Password,Name) VALUES ('{currentUser.Userid}' , ' " + { currentUser.Password} + "','" + currentUser.Name + "');";
 
         //}
 
@@ -62,36 +62,7 @@ namespace UWPYourNoteLibrary.Models
         // ----------------------------------------NOTE DISPLAY PAGE DB UPDATION----------------------------------------
 
         //Creates a new entry for the shared note
-        public static void InsertSharedNote(string sharedTableName, string sharedUserId, long noteId)// Needed
-        {
-            string query = $"INSERT INTO {sharedTableName} VALUES (@SHAREDUSERID, @NOTEID);";
-            SQLiteConnection conn  = new  SQLiteConnection() ;
-            try
-            {
-
-
-                SQLiteCommand command = new SQLiteCommand(query, conn);
-                SQLiteParameter[] parameters = new SQLiteParameter[2];
-                parameters[0] = new SQLiteParameter("@sharedUserId", sharedUserId);
-                parameters[1] = new SQLiteParameter("@noteId", noteId);
-                command.Parameters.Add(parameters[0]);
-                command.Parameters.Add(parameters[1]);
-                command.ExecuteNonQuery();
-                conn.Close();
-
-
-
-
-
-
-            }
-           catch(Exception e) { Logger.WriteLog(e.Message);  }
-            finally
-            {
-                conn.Close();
-
-            }
-        }
+      
         //Updation of the Note
       
         //Updation of the Note Title
@@ -128,35 +99,8 @@ namespace UWPYourNoteLibrary.Models
         //Updation of the Note Content
        
 
-        //Delete the Note
-        public static void DeleteNote(string notesTableName, string sharedTableName, long noteId)// Needed 
-        {
 
-
-            string query = $"DELETE FROM {notesTableName} WHERE NOTEID  = @noteId ; ";
-         
-            SQLiteConnection conn  = new  SQLiteConnection() ;
-
-            try
-            {
-
-
-                SQLiteCommand command = new SQLiteCommand(query, conn);
-                SQLiteParameter parameters = new SQLiteParameter("@noteId", noteId);
-                command.Parameters.Add(parameters);
-                command.ExecuteNonQuery();                
-                conn.Close();
-
-
-            }
-           catch(Exception e) { Logger.WriteLog(e.Message);  }
-            finally
-            {
-                conn.Close();
-
-            }
-
-        }
+        
 
         public static void UpdateNoteColor(string tableName, long noteId, long noteColor, string modifiedDay)
         {

@@ -8,6 +8,7 @@ using UWPYourNoteLibrary.Domain;
 using UWPYourNoteLibrary.Domain.Contract;
 using UWPYourNoteLibrary.Models;
 using UWPYourNoteLibrary.Data.Handler.Contract;
+using UWPYourNoteLibrary.Util;
 using static UWPYourNoteLibrary.Domain.CheckIfUserExistsUseCase;
 namespace UWPYourNoteLibrary.Data.Managers
 
@@ -31,7 +32,7 @@ namespace UWPYourNoteLibrary.Data.Managers
         {
             userDBHandler = UserDBHandler.Singleton;
 
-            bool isExist = userDBHandler.CheckIfExistingEmail(DBCreation.userTableName, email);
+            bool isExist = userDBHandler.CheckIfExistingEmail(UserUtilities.userTableName, email);
             CheckIfUserExistsUseCaseResponse checkIfExistingEmailUseCaseRequest = new CheckIfUserExistsUseCaseResponse();
             checkIfExistingEmailUseCaseRequest.IsExists = isExist;
             if (isExist)

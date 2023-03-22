@@ -12,6 +12,9 @@ namespace UWPYourNoteLibrary.Util
 {
     public class NotesUtilities
     {
+        public static string notesTableName = "NotesTable";
+        public static string  sharedTableName = "ShareTable";
+
         public enum TypeOfNote
         {
             PersonalNotes,

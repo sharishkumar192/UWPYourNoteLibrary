@@ -9,7 +9,7 @@ using UWPYourNoteLibrary.Domain.Contract;
 using UWPYourNoteLibrary.Domain.UseCase;
 using UWPYourNoteLibrary.Models;
 using static UWPYourNoteLibrary.Domain.UseCase.ValidateCredentialsUseCase;
-
+using UWPYourNoteLibrary.Util;
 namespace UWPYourNoteLibrary.Data.Handler
 {
     public class ValidateCredentialsDataManager : IValidateCredentialsDataManager<ValidateCredentialsUseCaseResponse>
@@ -30,7 +30,7 @@ namespace UWPYourNoteLibrary.Data.Handler
         public void ValidateCredentials(string username, string password, ICallback<ValidateCredentialsUseCaseResponse> callback)
         {
             userDBHandler = UserDBHandler.Singleton;
-            Models.User user= userDBHandler.ValidateUser(DBCreation.userTableName, username, password);
+            Models.User user= userDBHandler.ValidateUser(UserUtilities.userTableName, username, password);
             ValidateCredentialsUseCaseResponse response = new ValidateCredentialsUseCaseResponse();
             response.user = user;
             if(user == null)

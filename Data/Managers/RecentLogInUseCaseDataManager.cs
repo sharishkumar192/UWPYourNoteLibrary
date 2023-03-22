@@ -11,6 +11,7 @@ using UWPYourNoteLibrary.Data.Handler.Contract;
 using UWPYourNoteLibrary.Data.Handler;
 using System.Collections.ObjectModel;
 using UWPYourNoteLibrary.Models;
+using UWPYourNoteLibrary.Util;
 
 namespace UWPYourNoteLibrary.Data.Managers
 {
@@ -33,7 +34,7 @@ namespace UWPYourNoteLibrary.Data.Managers
         public void RecentLogInUsers(string userId, string password, ICallback<RecentLogInUseCaseResponse> useCaseCallBack)
         {
             userDBHandler = UserDBHandler.Singleton;
-            ObservableCollection<Models.User> recentList = userDBHandler.RecentLoggedInUsers(DBCreation.userTableName);
+            ObservableCollection<Models.User> recentList = userDBHandler.RecentLoggedInUsers(UserUtilities.userTableName);
             RecentLogInUseCaseResponse response = new RecentLogInUseCaseResponse();
             response.List = recentList;
             if(recentList!=null)

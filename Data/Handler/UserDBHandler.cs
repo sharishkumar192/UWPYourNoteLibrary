@@ -10,10 +10,10 @@ using Windows.Storage;
 using UWPYourNoteLibrary.Data.Handler.Contract;
 using UWPYourNoteLibrary.Data.Handler.Adapter;
 using System.Collections.ObjectModel;
-
+using UWPYourNoteLibrary.Util;
 namespace UWPYourNoteLibrary.Data.Handler
 {
-    internal class UserDBHandler : IUserDBHandler
+    public class UserDBHandler : IUserDBHandler
     {
 
         private SQLiteConnection conn = null;
@@ -34,6 +34,33 @@ namespace UWPYourNoteLibrary.Data.Handler
             }
 
         }
+
+
+        public static void CreateUserTable()
+        {
+            string query =
+            $"CREATE TABLE IF NOT EXISTS {UserUtilities.userTableName} (NAME VARCHAR(10000)," +
+            $" USERID VARCHAR(10000) PRIMARY KEY," +
+            $" PASSWORD VARCHAR(10000)," +
+            $" LOGINCOUNT INTEGER DEFAULT 0 )";
+            SQLiteConnection conn = SQLiteAdapter.OpenConnection();
+            try
+            {
+                SQLiteCommand command = new SQLiteCommand(query, conn);
+                command.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (Exception e) { Logger.WriteLog(e.Message); }
+
+            finally
+            {
+                conn.Close();
+
+            }
+
+        }
+
+
         public bool InsertNewUser(string tableName, string username, string email, string password)
         {
             bool result = true;

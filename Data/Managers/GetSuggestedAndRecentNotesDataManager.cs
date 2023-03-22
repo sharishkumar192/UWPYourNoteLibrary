@@ -9,7 +9,7 @@ using UWPYourNoteLibrary.Data.Handler;
 using UWPYourNoteLibrary.Domain.Contract;
 using UWPYourNoteLibrary.Domain.UseCase;
 using UWPYourNoteLibrary.Models;
-
+using UWPYourNoteLibrary.Util;
 namespace UWPYourNoteLibrary.Data.Managers
 {
     public class GetSuggestedAndRecentNotesDataManager : IGetSuggestedAndRecentNotesUseCaseDataManager
@@ -33,7 +33,7 @@ namespace UWPYourNoteLibrary.Data.Managers
             ObservableCollection<Note> list = null;
             if(text.Length >=3)
             {
-                list = DBHandler.GetSuggestedNotes(DBCreation.notesTableName, userId, text);
+                list = DBHandler.GetSuggestedNotes(NotesUtilities.notesTableName, userId, text);
             }
             else
             {
