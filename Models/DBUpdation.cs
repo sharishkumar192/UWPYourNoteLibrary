@@ -56,60 +56,7 @@ namespace UWPYourNoteLibrary.Models
         // ----------------------------------------ACCOUNT PAGE DB UPDATION----------------------------------------
 
         //Creates new note 
-        public static long InsertNewNote(string tableName, Note newNote)// Needed 
-        {
 
-            SQLiteConnection conn  = new  SQLiteConnection() ;
-            long noteId = 0;
-            string query1 = $"INSERT INTO {tableName}  (USERID, TITLE, CONTENT, NOTECOLOR, CREATIONDAY, MODIFIEDDAY) VALUES (@userId, @title, @content, @noteColor, @creationDay, @modifiedDay);";
-            string query2 = $"SELECT seq FROM sqlite_sequence where name =  '{tableName}' ; ";
-            try
-            {
-
-
-                SQLiteCommand command = new SQLiteCommand(query1, conn);
-                SQLiteParameter[] parameters = new SQLiteParameter[6];
-                parameters[0] = new SQLiteParameter("@userId", newNote.userId);
-                parameters[1] = new SQLiteParameter("@title", newNote.title);
-                parameters[2] = new SQLiteParameter("@content", newNote.content);
-                parameters[3] = new SQLiteParameter("@noteColor", newNote.noteColor);
-                parameters[4] = new SQLiteParameter("@creationDay", newNote.creationDay);
-                parameters[5] = new SQLiteParameter("@modifiedDay", newNote.modifiedDay);
-                command.Parameters.Add(parameters[0]);
-                command.Parameters.Add(parameters[1]);
-                command.Parameters.Add(parameters[2]);
-                command.Parameters.Add(parameters[3]);
-                command.Parameters.Add(parameters[4]);
-                command.Parameters.Add(parameters[5]);
-
-                command.ExecuteNonQuery();
-
-                command.Parameters.Remove(parameters[0]);
-                command.Parameters.Remove(parameters[1]);
-                command.Parameters.Remove(parameters[2]);
-                command.Parameters.Remove(parameters[3]);
-                command.Parameters.Remove(parameters[4]);
-                command.Parameters.Remove(parameters[5]);
-              //  string query3 = "SELECT seq FROM  sqlite_sequence where name = 'NotesTable' ";
-                command.CommandText = query2;
-
-                noteId = (long)command.ExecuteScalar();
-
-
-                conn.Close();
-
-
-
-            }
-           catch(Exception e) { Logger.WriteLog(e.Message);  }
-            finally
-            {
-                conn.Close();
-
-            }
-            return noteId;
-
-        }
 
 
         // ----------------------------------------NOTE DISPLAY PAGE DB UPDATION----------------------------------------
@@ -146,73 +93,9 @@ namespace UWPYourNoteLibrary.Models
             }
         }
         //Updation of the Note
-        public static void UpdateNote(string notesTableName, string title, string content, long noteId, string modifiedDay)// Needed
-        {
-            string query = $"UPDATE {notesTableName} SET TITLE = @title, CONTENT= @content, MODIFIEDDAY = @modifiedDay WHERE NOTEID = @noteId  ;";
-            SQLiteConnection conn  = new  SQLiteConnection() ;
-            try
-            {
-
-                SQLiteCommand command = new SQLiteCommand(query, conn);
-                SQLiteParameter[] parameters = new SQLiteParameter[4];
-                parameters[0] = new SQLiteParameter("@title", title);
-                parameters[1] = new SQLiteParameter("@content", content);
-                parameters[2] = new SQLiteParameter("@modifiedDay", modifiedDay);
-                parameters[3] = new SQLiteParameter("@noteId", noteId);
-
-
-                command.Parameters.Add(parameters[0]);
-                command.Parameters.Add(parameters[1]);
-                command.Parameters.Add(parameters[2]);
-                command.Parameters.Add(parameters[3]);
-                command.ExecuteNonQuery();
-                conn.Close();
-
-
-
-
-            }
-           catch(Exception e) { Logger.WriteLog(e.Message);  }
-            finally
-            {
-                conn.Close();
-
-            }
-
-        }
+      
         //Updation of the Note Title
-        public static void UpdateNoteTitle(string notesTableName, string title, long noteId, string modifiedDay)// Needed
-        {
-            string query = $"UPDATE {notesTableName} SET TITLE= @title, MODIFIEDDAY = @modifiedDay WHERE NOTEID = @noteId  ;";
-            SQLiteConnection conn  = new  SQLiteConnection() ;
-            try
-            {
-
-                SQLiteCommand command = new SQLiteCommand(query, conn);
-                SQLiteParameter[] parameters = new SQLiteParameter[3];
-                parameters[0] = new SQLiteParameter("@title", title);
-                parameters[1] = new SQLiteParameter("@modifiedDay", modifiedDay);
-                parameters[2] = new SQLiteParameter("@noteId", noteId); 
-
-
-                command.Parameters.Add(parameters[0]);
-                command.Parameters.Add(parameters[1]);
-                command.Parameters.Add(parameters[2]);
-                command.ExecuteNonQuery();
-                conn.Close();
-
-
-
-
-            }
-           catch(Exception e) { Logger.WriteLog(e.Message);  }
-            finally
-            {
-                conn.Close();
-
-            }
-
-        }
+       
 
         public static void UpdateNoteCount(string notesTableName, long searchCount, long noteId)
         {
@@ -243,34 +126,7 @@ namespace UWPYourNoteLibrary.Models
         }
 
         //Updation of the Note Content
-        public static void UpdateNoteContent(string notesTableName, string content, long noteId, string modifiedDay)// Needed
-        {
-            string query = $"UPDATE {notesTableName} SET  CONTENT= @content, MODIFIEDDAY = @modifiedDay WHERE NOTEID = @noteId  ;";
-            SQLiteConnection conn  = new  SQLiteConnection() ;
-            try
-            {
-
-                SQLiteCommand command = new SQLiteCommand(query, conn);
-                SQLiteParameter[] parameters = new SQLiteParameter[3];
-                parameters[0] = new SQLiteParameter("@content", content);
-                parameters[1] = new SQLiteParameter("@modifiedDay", modifiedDay);
-                parameters[2] = new SQLiteParameter("@noteId", noteId);
-
-
-                command.Parameters.Add(parameters[0]);
-                command.Parameters.Add(parameters[1]);
-                command.Parameters.Add(parameters[2]);
-                command.ExecuteNonQuery();
-                conn.Close();
-            }
-           catch(Exception e) { Logger.WriteLog(e.Message);  }
-            finally
-            {
-                conn.Close();
-
-            }
-
-        }
+       
 
         //Delete the Note
         public static void DeleteNote(string notesTableName, string sharedTableName, long noteId)// Needed 
@@ -330,6 +186,8 @@ namespace UWPYourNoteLibrary.Models
 
 
         }
+
+
 
 
 

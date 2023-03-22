@@ -77,7 +77,13 @@ namespace UWPYourNoteLibrary.Models
             this.noteColor = noteColor;
             this.modifiedDay = modifiedDay;
         }
- 
+        public Note(long noteId, string title, string content, string modifiedDay) 
+        {
+            this.noteId = noteId;
+            this.title = title;
+            this.content = content;
+            this.modifiedDay= modifiedDay;
+        }
 
 
     }

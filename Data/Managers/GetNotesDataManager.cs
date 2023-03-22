@@ -17,7 +17,7 @@ namespace UWPYourNoteLibrary.Data.Managers
 {
     public class GetNotesDataManager : IGetNotesUseCaseDataManager
     {
-        public IUserDBHandler DBHandler { get; set; }
+        public INoteDBHandler DBHandler { get; set; }
         private static GetNotesDataManager dataManager;
         public static GetNotesDataManager Singleton
         {
@@ -32,7 +32,7 @@ namespace UWPYourNoteLibrary.Data.Managers
         }
         public void GetNotes(string userId, TypeOfNote type, bool IsSort, ICallback<GetNotesUseCaseResponse> callback)
         {
-            DBHandler = UserDBHandler.Singleton;
+            DBHandler = NoteDBHandler.Singleton;
             ObservableCollection<Note> list = null;
             switch(type)
             {
@@ -51,10 +51,10 @@ namespace UWPYourNoteLibrary.Data.Managers
                 callback?.onFailure(response);
 
         }
-        public ObservableCollection<Note> GetNotes(string userId)
+        public ObservableCollection<Note> GetRecentNotes(string userId)
         {
-            DBHandler = UserDBHandler.Singleton;
-            ObservableCollection<Note> list = DBHandler.GetAllNotes(DBCreation.notesTableName, DBCreation.sharedTableName, userId);
+            DBHandler = NoteDBHandler.Singleton;
+            ObservableCollection<Note> list = DBHandler.GetAllRecentNotes(DBCreation.notesTableName, DBCreation.sharedTableName, userId);
             return list;
 
         }

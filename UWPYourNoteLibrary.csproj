@@ -120,20 +120,26 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Data\Handler\Contract\INoteDBHandler.cs" />
+    <Compile Include="Data\Handler\NoteDBHandler.cs" />
     <Compile Include="Data\Managers\CheckIfUserExistsEmailDataManager.cs" />
     <Compile Include="Data\Managers\CreateAccountDataManager.cs" />
     <Compile Include="Data\Handler\Contract\IUserDBHandler.cs" />
     <Compile Include="Data\Handler\Adapter\SQLiteAdapter.cs" />
     <Compile Include="Data\Handler\UserDBHandler.cs" />
+    <Compile Include="Data\Managers\CreateNewNoteDataManager.cs" />
     <Compile Include="Data\Managers\GetNotesDataManager.cs" />
     <Compile Include="Data\Managers\GetSuggestedAndRecentNotesDataManager.cs" />
     <Compile Include="Data\Managers\RecentLogInUseCaseDataManager.cs" />
+    <Compile Include="Data\Managers\UpdateNoteDataManager.cs" />
     <Compile Include="Data\Managers\ValidateCredentialsDataManager.cs" />
     <Compile Include="Domain\Contract\ICallback.cs" />
     <Compile Include="Domain\UseCase\CreateAccountUseCase.cs" />
     <Compile Include="Domain\UseCase\CheckIfUserExistsUseCase.cs" />
+    <Compile Include="Domain\UseCase\CreateNewNoteUseCase.cs" />
     <Compile Include="Domain\UseCase\GetNotesUseCase.cs" />
     <Compile Include="Domain\UseCase\GetSuggestedAndRecentNotesUseCase.cs" />
+    <Compile Include="Domain\UseCase\UpdateNoteUseCase.cs" />
     <Compile Include="Domain\UseCase\UseCaseBase.cs" />
     <Compile Include="Domain\UseCase\RecentLogInUseCase.cs" />
     <Compile Include="Domain\UseCase\ValidateCredentialsUseCase.cs" />
@@ -161,7 +167,6 @@
       <Version>1.0.117</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

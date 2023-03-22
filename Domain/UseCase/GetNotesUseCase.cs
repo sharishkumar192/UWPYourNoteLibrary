@@ -15,7 +15,7 @@ namespace UWPYourNoteLibrary.Domain.UseCase
     public interface IGetNotesUseCaseDataManager
     {
         void GetNotes(string userId, TypeOfNote type, bool IsSort, ICallback<GetNotesUseCaseResponse> callback);
-        ObservableCollection<Note> GetNotes(string userId);
+        ObservableCollection<Note> GetRecentNotes(string userId);
     }
     public class GetNotesUseCaseRequest
     {

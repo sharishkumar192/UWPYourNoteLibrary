@@ -12,11 +12,7 @@ namespace UWPYourNoteLibrary.Data.Handler.Contract
         bool InsertNewUser(string tableName, string username, string email, string password);
         bool CheckIfExistingEmail(string tableName, string userId);
         Models.User ValidateUser(string tableName, string userId, string password);
-        ObservableCollection<Note> GetPersonalNotes(string notesTableName, string userId);
-        ObservableCollection<Note> GetSharedNotes(string notesTableName, string sharedTableName, string userId);
-        ObservableCollection<Note> GetAllNotes(string notesTableName, string sharedTableName, string userId);
-        ObservableCollection<Models.User> RecentLoggedInUsers(string tableName);
-        ObservableCollection<Models.Note> GetSuggestedNotes(string tableName, string userId, string title);
+         ObservableCollection<Models.User> RecentLoggedInUsers(string tableName);
 
     }
 }

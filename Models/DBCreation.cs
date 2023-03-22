@@ -45,7 +45,7 @@ namespace UWPYourNoteLibrary.Models
             $" USERID VARCHAR(10000) PRIMARY KEY," +
             $" PASSWORD VARCHAR(10000)," +
             $" LOGINCOUNT INTEGER DEFAULT 0 )";
-            SQLiteConnection conn  = new  SQLiteConnection() ;
+            SQLiteConnection conn = SQLiteAdapter.OpenConnection();
             try
             {
                 SQLiteCommand command = new SQLiteCommand(query, conn);
