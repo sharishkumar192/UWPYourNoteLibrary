@@ -22,6 +22,13 @@ namespace UWPYourNoteLibrary.Util
             AllNotes
         }
 
+        public enum NoteBackgroundColor
+        {
+            BackgroundPink,
+            BackgroundGreen,
+            BackgroundYellow,
+            BackgroundBlue
+        }
 
         public static Dictionary<int, string> noteColorStyle = new Dictionary<int, string>()
         {
@@ -40,6 +47,18 @@ namespace UWPYourNoteLibrary.Util
 
         };
 
+        public static Dictionary<int, string> noteShareBackgroundStyle = new Dictionary<int, string>()
+        {
+            {0, "#c4969c" },
+              {1, "#9ab48e" },
+                {2, "#cabe8a" },
+                  {3, "#9bbaca" }
+
+        };
+
+
+
+
 
         public static SolidColorBrush GetSolidColorBrush(long value)
         {
@@ -55,11 +74,22 @@ namespace UWPYourNoteLibrary.Util
             return myBrush;
         }
 
-   
+        public static SolidColorBrush GetSolidColorBrush(string color)
+        {
+
+            string hex = color;
+            hex = hex.Replace("#", string.Empty);
+            byte r = (byte)(Convert.ToUInt32(hex.Substring(0, 2), 16));
+            byte g = (byte)(Convert.ToUInt32(hex.Substring(2, 2), 16));
+            byte b = (byte)(Convert.ToUInt32(hex.Substring(4, 2), 16));
+            SolidColorBrush myBrush = new SolidColorBrush(Windows.UI.Color.FromArgb((byte)255, r, g, b));
+            return myBrush;
+        }
+
 
         //----Note Font Background
 
-            public static void FontBackgroundClick(object sender, RoutedEventArgs e)
+        public static void FontBackgroundClick(object sender, RoutedEventArgs e)
         {
             RichEditBox box = (RichEditBox)sender;
             Windows.UI.Text.ITextSelection selectedText = box.Document.Selection;

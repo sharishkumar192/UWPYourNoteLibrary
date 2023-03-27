@@ -19,6 +19,7 @@ namespace UWPYourNoteLibrary.Models
 {
     public class DBCreation
     {
+
     }
 }
 
