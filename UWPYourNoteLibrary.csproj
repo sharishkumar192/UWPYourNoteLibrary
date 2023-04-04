@@ -156,6 +156,7 @@
     <Compile Include="Models\StyleOptionItemTemplateSelector.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\ChangeAccentColor.cs" />
     <Compile Include="Util\NotesUtilities.cs" />
     <Compile Include="Util\SaveAppSettings.cs" />
     <Compile Include="Util\UserUtilities.cs" />
