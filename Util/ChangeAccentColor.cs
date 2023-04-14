@@ -20,9 +20,15 @@ namespace UWPYourNoteLibrary.Util
             Forest,
             Nighttime
         };
-         static ResourceDictionary Light = null;
+
+        public enum Themes
+        {
+            Light,
+            Dark,
+            System
+        };
+        static ResourceDictionary Light = null;
         static ResourceDictionary Dark = null;
-        static int i = 0;
         public static void AccentColorHelper2(string theme, ColorType accentColor)
         {
                 ResourceDictionary Theme = null;
@@ -78,7 +84,60 @@ namespace UWPYourNoteLibrary.Util
             
 
         }
-        public static void AccentDefault()
+        public static void GetResourceNames()
+        {
+            var value = Application.Current.Resources.ThemeDictionaries.Values.FirstOrDefault();
+            Console.WriteLine(value);
+
+            foreach (var x in Application.Current.Resources.ThemeDictionaries)
+            {
+                if (x.Key.Equals("Dark"))
+                {
+                    Dark = x.Value as ResourceDictionary;
+                }
+                if (x.Key.Equals("Light"))
+                {
+                    Light = x.Value as ResourceDictionary;
+                }
+
+                if (Dark != null && Light != null)
+                    break;
+            }
+        }
+
+        public static void ChangeTheme(FrameworkElement currentTheme, Themes themeToChange)
+        {
+            if (Light == null && Dark == null)
+            {
+                GetResourceNames();
+            }
+            switch (themeToChange)
+            {
+                case Themes.System:
+                    {
+                        currentTheme.RequestedTheme = ElementTheme.Default;
+                        break;
+                    }
+                case Themes.Dark:
+                    {
+                        currentTheme.RequestedTheme = ElementTheme.Dark; 
+                        break;
+          
+
+                    }
+                case Themes.Light:
+                    {
+                        currentTheme.RequestedTheme = ElementTheme.Light;
+                        break;
+                    }
+
+            }
+            SaveAppSettings.SaveThemePreferences(themeToChange);
+         
+
+        }
+        
+         public static void AccentDefault()
         {
             AccentColorHelper1(ColorType.Default);
 
@@ -89,7 +148,6 @@ namespace UWPYourNoteLibrary.Util
             AccentColorHelper1(ColorType.Lavendar);
 
         }
-
         public static void AccentNightTime()
         {
 
@@ -97,8 +155,6 @@ namespace UWPYourNoteLibrary.Util
 
 
         }
-
-
         public static void AccentForest()
         {
 
@@ -106,35 +162,26 @@ namespace UWPYourNoteLibrary.Util
 
 
         }
-        public static void ChangeAccent()
+        public static void ChangeAccent(ColorType accentToChange)
         {
             if(Light == null && Dark == null) 
-            { 
-                foreach (var x in Application.Current.Resources.ThemeDictionaries)
-                {
-                    if (x.Key.Equals("Dark"))
-                    {
-                        Dark = x.Value as ResourceDictionary;
-                    }
-                    if (x.Key.Equals("Light"))
-                    {
-                        Light = x.Value as ResourceDictionary;
-                    }
-
-                    if (Dark != null && Light != null)
-                        break;
-                }
-
-            }
-            switch(i)
             {
-                case 0: AccentLavendar(); break;
-                case 1: AccentForest(); break;
-                case 3: AccentNightTime();break;
+                GetResourceNames();
+            }
+            switch(accentToChange)
+            {
+                case ColorType.Lavendar: AccentLavendar(); break;
+                case ColorType.Forest: AccentForest(); break;
+                case ColorType.Nighttime: AccentNightTime();break;
                 default: AccentDefault();break;
             }
-            //  AccentLavendar();
-            i = (i+1)% 4;
+
+            SaveAppSettings.SaveAccentPreferences(accentToChange);
         }
+
+        //public static void ChangeThemeNewView(ElementTheme currentTheme, Themes themeToChange)
+        //{
+        //}
+
     }
 }

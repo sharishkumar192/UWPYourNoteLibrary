@@ -46,9 +46,9 @@ namespace UWPYourNoteLibrary.Data.Managers
 
 
             if (list == null)
-                callback?.onSuccess(response);
-            else
                 callback?.onFailure(response);
+            else
+                callback?.onSuccess(response);
 
         }
 

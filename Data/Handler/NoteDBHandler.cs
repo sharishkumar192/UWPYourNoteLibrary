@@ -424,7 +424,7 @@ namespace UWPYourNoteLibrary.Data.Handler
             catch (Exception e) { Logger.WriteLog(e.Message); }
             finally
             {
-                conn.Close();
+                conn?.Close();
 
             }
             return notes;

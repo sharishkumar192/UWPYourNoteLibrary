@@ -16,6 +16,8 @@ namespace UWPYourNoteLibrary.Models {
         public DataTemplate AllItems { get; set; }
         public DataTemplate LastItems { get; set; }
 
+        public DataTemplate NoItems { get; set; }
+
         protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
         {
             DataTemplate _returnTemplate = new DataTemplate();
@@ -46,7 +48,8 @@ namespace UWPYourNoteLibrary.Models {
                 var contents = itemsControl.ItemsSource as ObservableCollection<Models.Note>;
                 int count = contents.Count;
                 var i = contents.IndexOf((Note)item);
-
+                if (contents.Count == 0 || contents == null)
+                    _returnTemplate = NoItems;
                 if (contents.Count == 1)
                     _returnTemplate = LastItems;
                 else

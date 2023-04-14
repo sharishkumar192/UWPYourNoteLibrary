@@ -29,9 +29,17 @@ namespace UWPYourNoteLibrary.Data.Handler.Adapter
         }
         public static SQLiteConnection OpenConnection()
         {
-            SQLiteConnection sqlite_conn = SQLiteConnection;
-            sqlite_conn.Open();
-            return sqlite_conn;
-        }
+            try
+            {
+                SQLiteConnection sqlite_conn = SQLiteConnection;
+                sqlite_conn.Open();
+                return sqlite_conn;
+            }
+            catch (Exception e)
+            {
+               
+            }
+            return null;
+               }
     }
 }

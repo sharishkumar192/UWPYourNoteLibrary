@@ -159,6 +159,7 @@
     <Compile Include="Util\ChangeAccentColor.cs" />
     <Compile Include="Util\NotesUtilities.cs" />
     <Compile Include="Util\SaveAppSettings.cs" />
+    <Compile Include="Util\ThemePublisher.cs" />
     <Compile Include="Util\UserUtilities.cs" />
     <EmbeddedResource Include="Properties\UWPYourNoteLibrary.rd.xml" />
   </ItemGroup>
