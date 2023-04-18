@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
+using UWPYourNoteLibrary.Models;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -91,54 +92,66 @@ namespace UWPYourNoteLibrary.Util
 
         public static void FontBackgroundClick(object sender, RoutedEventArgs e)
         {
-            RichEditBox box = (RichEditBox)sender;
-            Windows.UI.Text.ITextSelection selectedText = box.Document.Selection;
-            if (selectedText != null)
+            try
             {
-                Windows.UI.Text.ITextCharacterFormat charFormatting = selectedText.CharacterFormat;
-                if (charFormatting.BackgroundColor.R == 0 && charFormatting.BackgroundColor.G == 0 && charFormatting.BackgroundColor.B == 0)
+                RichEditBox box = (RichEditBox)sender;
+                Windows.UI.Text.ITextSelection selectedText = box.Document.Selection;
+                if (selectedText != null)
                 {
-                    charFormatting.BackgroundColor = Windows.UI.Color.FromArgb(255, 255, 255, 255);
-                    charFormatting.ForegroundColor = Windows.UI.Color.FromArgb(0, 0, 0, 0);
-                }
-                else
-                {
-                    charFormatting.BackgroundColor = Windows.UI.Color.FromArgb(0, 0, 0, 0);
-                    charFormatting.ForegroundColor = Windows.UI.Color.FromArgb(0, 255, 255, 255);
-                }
+                    Windows.UI.Text.ITextCharacterFormat charFormatting = selectedText.CharacterFormat;
+                    if (charFormatting.BackgroundColor.R == 0 && charFormatting.BackgroundColor.G == 0 && charFormatting.BackgroundColor.B == 0)
+                    {
+                        charFormatting.BackgroundColor = Windows.UI.Color.FromArgb(255, 255, 255, 255);
+                        charFormatting.ForegroundColor = Windows.UI.Color.FromArgb(0, 0, 0, 0);
+                    }
+                    else
+                    {
+                        charFormatting.BackgroundColor = Windows.UI.Color.FromArgb(0, 0, 0, 0);
+                        charFormatting.ForegroundColor = Windows.UI.Color.FromArgb(0, 255, 255, 255);
+                    }
 
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex.Message);
             }
         }
 
         //----Note Font Increase
         public static  void FontIncreaseFunc(Windows.UI.Text.ITextSelection selectedText, float limit, float value)
         {
-
-
-            Windows.UI.Text.ITextCharacterFormat charFormatting;
-            if (selectedText != null)
+            try
             {
-                charFormatting = selectedText.CharacterFormat;
-                string text = selectedText.Text;
-                float size = charFormatting.Size;
-                if (!String.IsNullOrEmpty(text) && size < limit)
+                Windows.UI.Text.ITextCharacterFormat charFormatting;
+                if (selectedText != null)
                 {
-                    charFormatting.Size += value;
+                    charFormatting = selectedText.CharacterFormat;
+                    string text = selectedText.Text;
+                    float size = charFormatting.Size;
+                    if (!String.IsNullOrEmpty(text) && size < limit)
+                    {
+                        charFormatting.Size += value;
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex.Message);
+            }
+           
         }
         public static void FontIncreaseClick(object sender, RoutedEventArgs e)
         {
             RichEditBox box = (RichEditBox)sender;
-
-            FontIncreaseFunc(box.Document.Selection, (float)10.5, (float)0.5);
+            FontIncreaseFunc(box.Document.Selection, (float)15, (float)0.5);
         }
 
         //----Note Font Decrease
         public static void FontDecreaseFunc(Windows.UI.Text.ITextSelection selectedText, float limit, float value)
         {
 
-
+            try { 
             Windows.UI.Text.ITextCharacterFormat charFormatting;
             if (selectedText != null)
             {
@@ -149,6 +162,11 @@ namespace UWPYourNoteLibrary.Util
                 {
                     charFormatting.Size -= value;
                 }
+            }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex.Message);
             }
         }
 
@@ -164,28 +182,38 @@ namespace UWPYourNoteLibrary.Util
         public static void SmallCapsClick(object sender, RoutedEventArgs e)
         {
 
-            RichEditBox box = (RichEditBox)sender;
-
-            Windows.UI.Text.ITextSelection selectedText = box.Document.Selection;
+            try {
+                RichEditBox box = (RichEditBox)sender;
+                Windows.UI.Text.ITextSelection selectedText = box.Document.Selection;
             if (selectedText != null)
             {
                 Windows.UI.Text.ITextCharacterFormat charFormatting = selectedText.CharacterFormat;
                 charFormatting.SmallCaps = Windows.UI.Text.FormatEffect.Toggle;
             }
-
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex.Message);
+            }
         }
 
         //----Note All Caps
         public static void AllCapsClick(object sender, RoutedEventArgs e)
         {
-            RichEditBox box = (RichEditBox)sender;
+           
 
-
-            Windows.UI.Text.ITextSelection selectedText = box.Document.Selection;
+            try {
+                RichEditBox box = (RichEditBox)sender;
+                Windows.UI.Text.ITextSelection selectedText = box.Document.Selection;
             if (selectedText != null)
             {
                 Windows.UI.Text.ITextCharacterFormat charFormatting = selectedText.CharacterFormat;
                 charFormatting.AllCaps = Windows.UI.Text.FormatEffect.Toggle;
+            }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex.Message);
             }
 
         }
@@ -193,14 +221,20 @@ namespace UWPYourNoteLibrary.Util
         //----Note Strikethrough
         public static void StrikethroughClick(object sender, RoutedEventArgs e)
         {
-            RichEditBox box = (RichEditBox)sender;
+           
 
-
-            Windows.UI.Text.ITextSelection selectedText = box.Document.Selection;
+            try {
+                RichEditBox box = (RichEditBox)sender;
+                Windows.UI.Text.ITextSelection selectedText = box.Document.Selection;
             if (selectedText != null)
             {
                 Windows.UI.Text.ITextCharacterFormat charFormatting = selectedText.CharacterFormat;
                 charFormatting.Strikethrough = Windows.UI.Text.FormatEffect.Toggle;
+            }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex.Message);
             }
         }
     }

@@ -16,6 +16,9 @@ namespace UWPYourNoteLibrary.Data.Handler.Adapter
 
             get
             {
+                StorageFolder localFolder1 = ApplicationData.Current.LocalFolder;
+                SQLiteConnection sasdas = new SQLiteConnection("Data Source=" + localFolder1.Path + "\\database.db;foreign keys=true; Version = 3;  New = True; Compress = True; ");
+                ;
                 if (_sqliteConnection == null)
                 {
                     StorageFolder localFolder = ApplicationData.Current.LocalFolder;

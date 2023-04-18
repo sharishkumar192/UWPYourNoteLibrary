@@ -55,11 +55,12 @@ namespace UWPYourNoteLibrary.Domain.UseCase
             }
             public void onFailure(UpdateNoteUseCaseResponse response)
             {
-               // UseCase?.PresenterCallBack?.onFailure(response);
+                UseCase?.PresenterCallBack?.onFailure(response);
             }
 
             public void onSuccess(UpdateNoteUseCaseResponse response)
             {
+                UseCase?.PresenterCallBack?.onSuccess(response);
             }
         }
     }
