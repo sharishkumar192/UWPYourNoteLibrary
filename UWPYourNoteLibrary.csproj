@@ -155,6 +155,7 @@
     <Compile Include="Models\Note.cs" />
     <Compile Include="Models\StyleOptionItemTemplateSelector.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Notification\NotificationManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\ChangeAccentColor.cs" />
     <Compile Include="Util\NotesUtilities.cs" />

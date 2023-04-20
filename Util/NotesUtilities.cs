@@ -23,6 +23,11 @@ namespace UWPYourNoteLibrary.Util
             AllNotes
         }
 
+        public enum AutoSaveTimer
+        {
+            TimeFrequency = 5
+        }
+
         public enum NoteBackgroundColor
         {
             BackgroundPink,

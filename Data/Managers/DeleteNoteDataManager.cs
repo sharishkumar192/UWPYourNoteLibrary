@@ -12,6 +12,7 @@ using UWPYourNoteLibrary.Models;
 using System.Collections.ObjectModel;
 using UWPYourNoteLibrary.Util;
 using static UWPYourNoteLibrary.Util.NotesUtilities;
+using UWPYourNoteLibrary.Notification;
 
 namespace UWPYourNoteLibrary.Data.Managers
 {
@@ -37,6 +38,7 @@ namespace UWPYourNoteLibrary.Data.Managers
             bool result = DBHandler.DeleteNote(NotesUtilities.notesTableName, noteId);
             DeleteNoteUseCaseResponse response = new DeleteNoteUseCaseResponse();
             response.Result = result;
+            NotificationManager.NotifyDeleteNoteSucceeded();
             if (result)
                 callback?.onSuccess(response);
             else

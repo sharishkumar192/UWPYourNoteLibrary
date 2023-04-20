@@ -12,6 +12,7 @@ using UWPYourNoteLibrary.Models;
 using System.Collections.ObjectModel;
 using UWPYourNoteLibrary.Util;
 using static UWPYourNoteLibrary.Util.NotesUtilities;
+using UWPYourNoteLibrary.Notification;
 
 namespace UWPYourNoteLibrary.Data.Managers
 {
@@ -49,6 +50,9 @@ namespace UWPYourNoteLibrary.Data.Managers
 
             UpdateNoteUseCaseResponse response = new UpdateNoteUseCaseResponse();
             response.Result = result;
+
+            NotificationManager.NotifyUpdateNoteSucceeded(noteToUpdate);
+
             if (result)
                 callback?.onSuccess(response);
             else

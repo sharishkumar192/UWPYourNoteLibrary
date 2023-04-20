@@ -11,6 +11,8 @@ using UWPYourNoteLibrary.Data.Handler.Contract;
 using UWPYourNoteLibrary.Data.Handler.Adapter;
 using System.Collections.ObjectModel;
 using UWPYourNoteLibrary.Util;
+using System.Diagnostics;
+
 namespace UWPYourNoteLibrary.Data.Handler
 {
     public class UserDBHandler : IUserDBHandler
@@ -143,6 +145,7 @@ namespace UWPYourNoteLibrary.Data.Handler
         public Models.User ValidateUser(string tableName, string loggedUserId, string loggedPassword)
         {
             conn = SQLiteAdapter.OpenConnection();
+            Debug.WriteLine(conn);
             Models.User userDetails = null;
             string query1 = $"SELECT * FROM {tableName} WHERE USERID = @userId  AND PASSWORD = @password ; ";
 
