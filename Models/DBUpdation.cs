@@ -68,33 +68,7 @@ namespace UWPYourNoteLibrary.Models
         //Updation of the Note Title
        
 
-        public static void UpdateNoteCount(string notesTableName, long searchCount, long noteId)
-        {
-            string query = $"UPDATE {notesTableName} SET  SEARCHCOUNT = @count  WHERE NOTEID = @noteId  ;";
-            SQLiteConnection conn  = new  SQLiteConnection() ;
-            try
-            {
-
-                SQLiteCommand command = new SQLiteCommand(query, conn);
-                SQLiteParameter[] parameters = new SQLiteParameter[2];
-                parameters[0] = new SQLiteParameter("@count", searchCount);
-                parameters[1] = new SQLiteParameter("@noteId", noteId);
-
-
-                command.Parameters.Add(parameters[0]);
-                command.Parameters.Add(parameters[1]);
-                command.ExecuteNonQuery();
-                conn.Close();
-            }
-           catch(Exception e) { Logger.WriteLog(e.Message);  }
-            finally
-            {
-                conn.Close();
-
-            }
-
-
-        }
+        
 
         //Updation of the Note Content
        
@@ -102,34 +76,7 @@ namespace UWPYourNoteLibrary.Models
 
         
 
-        public static void UpdateNoteColor(string tableName, long noteId, long noteColor, string modifiedDay)
-        {
-            string query = $"UPDATE  {tableName} SET NOTECOLOR = @noteColor, MODIFIEDDAY = @modifiedDay  WHERE NOTEID = @noteId ; ";
-            SQLiteConnection conn = SQLiteAdapter.OpenConnection();
-            try
-            {
-                SQLiteCommand command = new SQLiteCommand(query, conn);
-                SQLiteParameter[] parameters = new SQLiteParameter[3];
-                parameters[0] = new SQLiteParameter("@noteColor", noteColor);
-                parameters[1] = new SQLiteParameter("@modifiedDay", modifiedDay);
-                parameters[2] = new SQLiteParameter("@noteId", noteId);
 
-                command.Parameters.Add(parameters[0]);
-                command.Parameters.Add(parameters[1]);
-                command.Parameters.Add(parameters[2]);
-                command.ExecuteNonQuery();
-                conn.Close();
-
-            }
-            catch (Exception e) { Logger.WriteLog(e.Message); }
-            finally
-            {
-                conn.Close();
-
-            }
-
-
-        }
 
 
 

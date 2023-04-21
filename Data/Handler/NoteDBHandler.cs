@@ -498,5 +498,191 @@ namespace UWPYourNoteLibrary.Data.Handler
 
 
         }
+
+
+        public  bool UpdateNoteCount(string notesTableName, long searchCount, long noteId)
+        {
+            bool result = false;
+            string query = $"UPDATE {notesTableName} SET  SEARCHCOUNT = @count  WHERE NOTEID = @noteId  ;";
+            SQLiteConnection conn = new SQLiteConnection();
+            try
+            {
+
+                SQLiteCommand command = new SQLiteCommand(query, conn);
+                SQLiteParameter[] parameters = new SQLiteParameter[2];
+                parameters[0] = new SQLiteParameter("@count", searchCount);
+                parameters[1] = new SQLiteParameter("@noteId", noteId);
+
+
+                command.Parameters.Add(parameters[0]);
+                command.Parameters.Add(parameters[1]);
+                command.ExecuteNonQuery();
+                result = true; 
+            }
+            catch (Exception e) { Logger.WriteLog(e.Message); }
+            finally
+            {
+                conn.Close();
+
+            }
+            return result;
+
+        }
+
+
+
+        public bool UpdateNoteColor(string tableName, long noteId, long noteColor, string modifiedDay)
+        {
+            bool result = false;
+            string query = $"UPDATE  {tableName} SET NOTECOLOR = @noteColor, MODIFIEDDAY = @modifiedDay  WHERE NOTEID = @noteId ; ";
+            SQLiteConnection conn = SQLiteAdapter.OpenConnection();
+            try
+            {
+                SQLiteCommand command = new SQLiteCommand(query, conn);
+                SQLiteParameter[] parameters = new SQLiteParameter[3];
+                parameters[0] = new SQLiteParameter("@noteColor", noteColor);
+                parameters[1] = new SQLiteParameter("@modifiedDay", modifiedDay);
+                parameters[2] = new SQLiteParameter("@noteId", noteId);
+
+                command.Parameters.Add(parameters[0]);
+                command.Parameters.Add(parameters[1]);
+                command.Parameters.Add(parameters[2]);
+                command.ExecuteNonQuery();
+                 result = true;
+            }
+            catch (Exception e) { Logger.WriteLog(e.Message); }
+            finally
+            {
+                conn.Close();
+
+            }
+
+            return result;
+        }
+
+
+        public bool CanShareNote(string tableName, string userId, long noteId)
+        {
+            bool isOwner = false;
+            string query = $"SELECT * FROM {tableName} WHERE USERID = @userId AND NOTEID = @noteId ; ";
+            SQLiteConnection conn = SQLiteAdapter.OpenConnection();
+            try
+            {
+                SQLiteCommand command = new SQLiteCommand(query, conn);
+                SQLiteParameter[] parameters = new SQLiteParameter[2];
+                parameters[0] = new SQLiteParameter("@userId", userId);
+                parameters[1] = new SQLiteParameter("@noteId", noteId);
+
+                command.Parameters.Add(parameters[0]);
+                command.Parameters.Add(parameters[1]);
+                using (SQLiteDataReader sqlite_datareader = command.ExecuteReader())
+                {
+                    while (sqlite_datareader.Read())
+                    {
+                        isOwner = true;
+                        break;
+
+                    }
+
+                    sqlite_datareader.Close();
+                }
+                conn.Close();
+
+            }
+            catch (Exception e) { Logger.WriteLog(e.Message); }
+            finally
+            {
+                conn.Close();
+
+            }
+
+            return isOwner;
+
+        }
+
+        public Dictionary<string, bool> AlreadySharedUsers(string tableName, long noteId)
+        {
+            Dictionary<string, bool> sharedUserIds = null;
+
+            string query = $"SELECT SHAREDUSERID FROM {tableName} WHERE SHAREDNOTEID = @noteId ; ";
+            SQLiteConnection conn = SQLiteAdapter.OpenConnection();
+            try
+            {
+                SQLiteCommand command = new SQLiteCommand(query, conn);
+                SQLiteParameter parameter = new SQLiteParameter("@noteId", noteId);
+
+                command.Parameters.Add(parameter);
+                using (SQLiteDataReader sqlite_datareader = command.ExecuteReader())
+                {
+                    while (sqlite_datareader.Read())
+                    {
+                        if (sharedUserIds == null)
+                            sharedUserIds = new Dictionary<string, bool>();
+                        sharedUserIds.Add(sqlite_datareader.GetString(0), true);
+                    }
+
+                    sqlite_datareader.Close();
+                }
+                conn.Close();
+            }
+            catch (Exception e) { Logger.WriteLog(e.Message); }
+            finally
+            {
+                conn.Close();
+
+            }
+
+            return sharedUserIds;
+
+        }
+
+
+        public ObservableCollection<UWPYourNoteLibrary.Models.User> ValidUsersToShare(string userTableName, string sharedTableName, string notesTableName, string userId, long noteId)// Needed
+        {
+            Dictionary<string, bool> sharedUserIds = AlreadySharedUsers(sharedTableName, noteId);
+            ObservableCollection<UWPYourNoteLibrary.Models.User> userToShare = new ObservableCollection<Models.User>(); ;
+            string query = $"SELECT * FROM {userTableName} WHERE USERID != @userId ; ";
+            SQLiteConnection conn = SQLiteAdapter.OpenConnection();
+            try
+            {
+                SQLiteCommand command = new SQLiteCommand(query, conn);
+                SQLiteParameter parameter = new SQLiteParameter("@userId", userId);
+
+                command.Parameters.Add(parameter);
+
+                using (SQLiteDataReader sqlite_datareader = command.ExecuteReader())
+                {
+                    while (sqlite_datareader.Read())
+                    {
+                        string name = sqlite_datareader.GetString(0);
+                        string validUserId = sqlite_datareader.GetString(1);
+
+                        if ((sharedUserIds != null && !sharedUserIds.ContainsKey(validUserId)) || sharedUserIds == null)
+                        {
+                            Models.User user = new Models.User(name, validUserId);
+                            userToShare.Add(user);
+                        }
+                    }
+
+                    sqlite_datareader.Close();
+                }
+                conn.Close();
+            }
+            catch (Exception e) { Logger.WriteLog(e.Message); }
+            finally
+            {
+                conn.Close();
+
+            }
+
+
+
+            return userToShare;
+        }
+
     }
+
+
+
+
 }

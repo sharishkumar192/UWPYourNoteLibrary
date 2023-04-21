@@ -122,6 +122,7 @@
   <ItemGroup>
     <Compile Include="Data\Handler\Contract\INoteDBHandler.cs" />
     <Compile Include="Data\Handler\NoteDBHandler.cs" />
+    <Compile Include="Data\Managers\CanShareNoteDataManager.cs" />
     <Compile Include="Data\Managers\CheckIfUserExistsEmailDataManager.cs" />
     <Compile Include="Data\Managers\CreateAccountDataManager.cs" />
     <Compile Include="Data\Handler\Contract\IUserDBHandler.cs" />
@@ -133,9 +134,13 @@
     <Compile Include="Data\Managers\GetSuggestedAndRecentNotesDataManager.cs" />
     <Compile Include="Data\Managers\RecentLogInUseCaseDataManager.cs" />
     <Compile Include="Data\Managers\ShareNoteDataManager.cs" />
+    <Compile Include="Data\Managers\UpdateCountDataManager.cs" />
+    <Compile Include="Data\Managers\UpdateNoteColorDataManager.cs" />
     <Compile Include="Data\Managers\UpdateNoteDataManager.cs" />
     <Compile Include="Data\Managers\ValidateCredentialsDataManager.cs" />
+    <Compile Include="Data\Managers\ValidUsersToShareDataManager.cs" />
     <Compile Include="Domain\Contract\ICallback.cs" />
+    <Compile Include="Domain\UseCase\CanShareNoteUseCase.cs" />
     <Compile Include="Domain\UseCase\CreateAccountUseCase.cs" />
     <Compile Include="Domain\UseCase\CheckIfUserExistsUseCase.cs" />
     <Compile Include="Domain\UseCase\CreateNewNoteUseCase.cs" />
@@ -143,10 +148,13 @@
     <Compile Include="Domain\UseCase\GetNotesUseCase.cs" />
     <Compile Include="Domain\UseCase\GetSuggestedAndRecentNotesUseCase.cs" />
     <Compile Include="Domain\UseCase\ShareNoteUseCase.cs" />
+    <Compile Include="Domain\UseCase\UpdateCountUseCase.cs" />
+    <Compile Include="Domain\UseCase\UpdateNoteColorUseCase.cs" />
     <Compile Include="Domain\UseCase\UpdateNoteUseCase.cs" />
     <Compile Include="Domain\UseCase\UseCaseBase.cs" />
     <Compile Include="Domain\UseCase\RecentLogInUseCase.cs" />
     <Compile Include="Domain\UseCase\ValidateCredentialsUseCase.cs" />
+    <Compile Include="Domain\UseCase\ValidUsersToShareUseCase.cs" />
     <Compile Include="Models\DBCreation.cs" />
     <Compile Include="Models\DBFetch.cs" />
     <Compile Include="Models\DBUpdation.cs" />

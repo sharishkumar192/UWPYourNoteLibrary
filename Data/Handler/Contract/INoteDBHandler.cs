@@ -32,6 +32,14 @@ namespace UWPYourNoteLibrary.Data.Handler.Contract
 
         bool DeleteNote(string notesTableName, long noteId);
 
+        bool UpdateNoteCount(string notesTableName, long searchCount, long noteId);
+
+        bool UpdateNoteColor(string tableName, long noteId, long noteColor, string modifiedDay);
+
+        bool CanShareNote(string tableName, string userId, long noteId);
+
+        ObservableCollection<UWPYourNoteLibrary.Models.User> ValidUsersToShare(string userTableName, string sharedTableName, string notesTableName, string userId, long noteId);
+        Dictionary<string, bool> AlreadySharedUsers(string tableName, long noteId);
 
 
     }

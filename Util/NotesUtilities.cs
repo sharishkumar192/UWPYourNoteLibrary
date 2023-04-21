@@ -1,10 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
+using UWPYourNoteLibrary.Domain;
+using UWPYourNoteLibrary.Domain.Contract;
+using UWPYourNoteLibrary.Domain.UseCase;
 using UWPYourNoteLibrary.Models;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -14,7 +19,7 @@ namespace UWPYourNoteLibrary.Util
     public class NotesUtilities
     {
         public static string notesTableName = "NotesTable";
-        public static string  sharedTableName = "ShareTable";
+        public static string sharedTableName = "ShareTable";
 
         public enum TypeOfNote
         {
@@ -124,7 +129,7 @@ namespace UWPYourNoteLibrary.Util
         }
 
         //----Note Font Increase
-        public static  void FontIncreaseFunc(Windows.UI.Text.ITextSelection selectedText, float limit, float value)
+        public static void FontIncreaseFunc(Windows.UI.Text.ITextSelection selectedText, float limit, float value)
         {
             try
             {
@@ -144,7 +149,7 @@ namespace UWPYourNoteLibrary.Util
             {
                 Logger.WriteLog(ex.Message);
             }
-           
+
         }
         public static void FontIncreaseClick(object sender, RoutedEventArgs e)
         {
@@ -156,18 +161,18 @@ namespace UWPYourNoteLibrary.Util
         public static void FontDecreaseFunc(Windows.UI.Text.ITextSelection selectedText, float limit, float value)
         {
 
-            try { 
-            Windows.UI.Text.ITextCharacterFormat charFormatting;
-            if (selectedText != null)
-            {
-                charFormatting = selectedText.CharacterFormat;
-                string text = selectedText.Text;
-                float size = charFormatting.Size;
-                if (!String.IsNullOrEmpty(text) && size > limit)
+            try {
+                Windows.UI.Text.ITextCharacterFormat charFormatting;
+                if (selectedText != null)
                 {
-                    charFormatting.Size -= value;
+                    charFormatting = selectedText.CharacterFormat;
+                    string text = selectedText.Text;
+                    float size = charFormatting.Size;
+                    if (!String.IsNullOrEmpty(text) && size > limit)
+                    {
+                        charFormatting.Size -= value;
+                    }
                 }
-            }
             }
             catch (Exception ex)
             {
@@ -190,11 +195,11 @@ namespace UWPYourNoteLibrary.Util
             try {
                 RichEditBox box = (RichEditBox)sender;
                 Windows.UI.Text.ITextSelection selectedText = box.Document.Selection;
-            if (selectedText != null)
-            {
-                Windows.UI.Text.ITextCharacterFormat charFormatting = selectedText.CharacterFormat;
-                charFormatting.SmallCaps = Windows.UI.Text.FormatEffect.Toggle;
-            }
+                if (selectedText != null)
+                {
+                    Windows.UI.Text.ITextCharacterFormat charFormatting = selectedText.CharacterFormat;
+                    charFormatting.SmallCaps = Windows.UI.Text.FormatEffect.Toggle;
+                }
             }
             catch (Exception ex)
             {
@@ -205,16 +210,16 @@ namespace UWPYourNoteLibrary.Util
         //----Note All Caps
         public static void AllCapsClick(object sender, RoutedEventArgs e)
         {
-           
+
 
             try {
                 RichEditBox box = (RichEditBox)sender;
                 Windows.UI.Text.ITextSelection selectedText = box.Document.Selection;
-            if (selectedText != null)
-            {
-                Windows.UI.Text.ITextCharacterFormat charFormatting = selectedText.CharacterFormat;
-                charFormatting.AllCaps = Windows.UI.Text.FormatEffect.Toggle;
-            }
+                if (selectedText != null)
+                {
+                    Windows.UI.Text.ITextCharacterFormat charFormatting = selectedText.CharacterFormat;
+                    charFormatting.AllCaps = Windows.UI.Text.FormatEffect.Toggle;
+                }
             }
             catch (Exception ex)
             {
@@ -226,21 +231,92 @@ namespace UWPYourNoteLibrary.Util
         //----Note Strikethrough
         public static void StrikethroughClick(object sender, RoutedEventArgs e)
         {
-           
+
 
             try {
                 RichEditBox box = (RichEditBox)sender;
                 Windows.UI.Text.ITextSelection selectedText = box.Document.Selection;
-            if (selectedText != null)
-            {
-                Windows.UI.Text.ITextCharacterFormat charFormatting = selectedText.CharacterFormat;
-                charFormatting.Strikethrough = Windows.UI.Text.FormatEffect.Toggle;
-            }
+                if (selectedText != null)
+                {
+                    Windows.UI.Text.ITextCharacterFormat charFormatting = selectedText.CharacterFormat;
+                    charFormatting.Strikethrough = Windows.UI.Text.FormatEffect.Toggle;
+                }
             }
             catch (Exception ex)
             {
                 Logger.WriteLog(ex.Message);
             }
         }
-    }
+
+
+        public static void UpdateNote(Note noteToUpdate, bool titleChange, bool contentChange, ICallback<UpdateNoteUseCaseResponse> callback)
+        {
+            UpdateNoteUseCaseRequest request = new UpdateNoteUseCaseRequest();
+            request.NoteToUpdate = noteToUpdate;
+            request.IsTitleChanged = titleChange;
+            request.IsContentChanged = contentChange;
+            UpdateNoteUseCase usecase = new UpdateNoteUseCase(request, callback);
+            usecase.Execute();
+        }
+
+        public static void DeleteNote(long noteId, ICallback<DeleteNoteUseCaseResponse> callback)
+        {
+            DeleteNoteUseCaseRequest request = new DeleteNoteUseCaseRequest();
+            request.NoteId = noteId;
+            DeleteNoteUseCase usecase = new DeleteNoteUseCase(request, callback);
+            usecase.Execute();
+        }
+
+
+        public static void ShareNote(string sharedUserId, long noteId, ICallback<ShareNoteUseCaseResponse> callback)
+        {
+            ShareNoteUseCaseRequest request = new ShareNoteUseCaseRequest();
+            request.NoteId = noteId;
+            request.SharedUserID = sharedUserId;
+            ShareNoteUseCase usecase = new ShareNoteUseCase(request, callback);
+            usecase.Execute();
+
+
+        }
+
+
+        public static void ValidUsersToShare(string userId, long displayNoteId, ICallback<ValidUsersToShareUseCaseResponse> callback)
+        {
+            ValidUsersToShareUseCaseRequest request = new ValidUsersToShareUseCaseRequest();
+            request.UserId = userId;
+            request.NoteId = displayNoteId;
+            ValidUsersToShareUseCase usecase = new ValidUsersToShareUseCase(request, callback);
+            usecase.Execute();
+        }
+
+        public static void CanShareNote(string userId, long noteId, ICallback<CanShareNoteUseCaseResponse> callback)
+        {
+            CanShareNoteUseCaseRequest request = new CanShareNoteUseCaseRequest();
+            request.UserId = userId;
+            request.NoteId = noteId;
+            CanShareNoteUseCase usecase = new CanShareNoteUseCase(request, callback);
+            usecase.Execute();
+        }
+
+        public static void UpdateNoteColor(long noteId, long noteColor, string modifiedDay, ICallback<UpdateNoteColorUseCaseResponse> callback)
+        {
+            UpdateNoteColorUseCaseRequest request = new UpdateNoteColorUseCaseRequest();
+            request.NoteId = noteId;
+            request.NoteColor = noteColor;
+            request.ModifiedDay = modifiedDay;
+            UpdateNoteColorUseCase usecase = new UpdateNoteColorUseCase(request, callback);
+            usecase.Execute();
+
+        }
+
+
+        public static void UpdateCount(long searchCount, long noteId, ICallback<UpdateCountUseCaseResponse> callback)
+        {
+            UpdateCountUseCaseRequest request = new UpdateCountUseCaseRequest();
+            request.SearchCount = searchCount;
+            request.NoteId = noteId;
+            UpdateCountUseCase usecase = new UpdateCountUseCase(request, callback);
+            usecase.Execute();
+        }
+}
 }
