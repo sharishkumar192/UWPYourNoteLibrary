@@ -32,8 +32,8 @@ namespace UWPYourNoteLibrary.Data.Managers
             }
         }
         public void UpdateNote(Note noteToUpdate, bool isTitleChanged, bool isContentChanged, ICallback<UpdateNoteUseCaseResponse> callback)
-        {   
-            DBHandler = NoteDBHandler.Singleton;
+        {
+            DBHandler = new NoteDBHandler() ;
 
             string tableName = NotesUtilities.notesTableName;
             bool result;

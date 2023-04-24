@@ -45,14 +45,14 @@ namespace UWPYourNoteLibrary.Models
 
                     sqlite_datareader.Close();
                 }
-                conn.Close();
+                  SQLiteAdapter.CloseConnection(conn);
 
             }
             catch (Exception e) { Logger.WriteLog(e.Message); }
 
             finally
             {
-                conn.Close();
+                  SQLiteAdapter.CloseConnection(conn);
 
             }
             return check;
@@ -94,14 +94,14 @@ namespace UWPYourNoteLibrary.Models
 
         //            sqlite_datareader.Close();
         //        }
-        //        conn.Close();
+        //          SQLiteAdapter.CloseConnection(conn);
 
         //    }
 
         //    catch (Exception e) { Logger.WriteLog(e.Message); }
         //    finally
         //    {
-        //        conn.Close();
+        //          SQLiteAdapter.CloseConnection(conn);
 
         //    }
 
@@ -133,14 +133,14 @@ namespace UWPYourNoteLibrary.Models
 
                     sqlite_datareader.Close();
                 }
-                conn.Close();
+                  SQLiteAdapter.CloseConnection(conn);
 
             }
 
             catch (Exception e) { Logger.WriteLog(e.Message); }
             finally
             {
-                conn.Close();
+                  SQLiteAdapter.CloseConnection(conn);
 
             }
 
@@ -196,7 +196,7 @@ namespace UWPYourNoteLibrary.Models
                     sqlite_datareader.Close();
                 }
 
-                conn.Close();
+                  SQLiteAdapter.CloseConnection(conn);
             }
 
 
@@ -205,7 +205,7 @@ namespace UWPYourNoteLibrary.Models
             catch (Exception e) { Logger.WriteLog(e.Message); }
             finally
             {
-                conn.Close();
+                  SQLiteAdapter.CloseConnection(conn);
 
             }
             return notes;
@@ -245,13 +245,13 @@ namespace UWPYourNoteLibrary.Models
 
 
                 }
-                conn.Close();
+                  SQLiteAdapter.CloseConnection(conn);
 
             }
             catch (Exception e) { Logger.WriteLog(e.Message); }
             finally
             {
-                conn.Close();
+                  SQLiteAdapter.CloseConnection(conn);
 
             }
 

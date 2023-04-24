@@ -34,7 +34,7 @@ namespace UWPYourNoteLibrary.Models
         //        command.Parameters.Add(parameters[2]);
         //        // command.Parameters.Add(parameters[3]);
         //        command.ExecuteNonQuery();
-        //        conn.Close();
+        //          SQLiteAdapter.CloseConnection(conn);
 
 
 
@@ -44,7 +44,7 @@ namespace UWPYourNoteLibrary.Models
         //   catch(Exception e) { Logger.WriteLog(e.Message);  }
         //    finally
         //    {
-        //        conn.Close();
+        //          SQLiteAdapter.CloseConnection(conn);
 
         //    }
 

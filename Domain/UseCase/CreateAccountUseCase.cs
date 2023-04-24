@@ -27,16 +27,9 @@ namespace UWPYourNoteLibrary.Domain
             Email = email;
             Password = password;
         }
-
-        //public CreateAccountUseCaseRequest(CreateAccountUseCaseRequest old)
-        //{
-        //    Name = old.Name;
-        //    Email = old.Email;
-        //    Password = old.Password;
-        //}
     }
 
-   
+
     public sealed class CreateAccountUseCaseResponse
     {
         bool result;
@@ -57,11 +50,11 @@ namespace UWPYourNoteLibrary.Domain
         public CreateAccountUseCase(CreateAccountUseCaseRequest uCAccountCreationRequest, ICallback<CreateAccountUseCaseResponse> callback)
         {
             DataManager = CreateAccountDataManager.Singleton;
-            Request = uCAccountCreationRequest; 
-            PresenterCallBack = callback; 
+            Request = uCAccountCreationRequest;
+            PresenterCallBack = callback;
         }
 
- 
+
 
         public override void Action()
         {
@@ -71,22 +64,22 @@ namespace UWPYourNoteLibrary.Domain
 
         private class UseCaseCallBack : ICallback<CreateAccountUseCaseResponse>
         {
-            
+
             private CreateAccountUseCase UseCase;
             public UseCaseCallBack(CreateAccountUseCase useCase)
             {
                 UseCase = useCase;
             }
 
-          
-            public void onFailure(CreateAccountUseCaseResponse result)
+
+            public void onFailure(CreateAccountUseCaseResponse response)
             {
-                UseCase?.PresenterCallBack?.onFailure(result);
+                UseCase?.PresenterCallBack?.onFailure(response);
             }
 
-            public void onSuccess(CreateAccountUseCaseResponse result)
+            public void onSuccess(CreateAccountUseCaseResponse response)
             {
-                UseCase?.PresenterCallBack?.onSuccess(result);
+                UseCase?.PresenterCallBack?.onSuccess(response);
             }
         }
 

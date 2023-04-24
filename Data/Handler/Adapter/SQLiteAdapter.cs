@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SQLite;
 using Windows.Storage;
+using UWPYourNoteLibrary.Models;
 
 namespace UWPYourNoteLibrary.Data.Handler.Adapter
 {
@@ -16,8 +17,8 @@ namespace UWPYourNoteLibrary.Data.Handler.Adapter
 
             get
             {
-                StorageFolder localFolder1 = ApplicationData.Current.LocalFolder;
-                SQLiteConnection sasdas = new SQLiteConnection("Data Source=" + localFolder1.Path + "\\database.db;foreign keys=true; Version = 3;  New = True; Compress = True; ");
+          //      StorageFolder localFolder1 = ApplicationData.Current.LocalFolder;
+            //    SQLiteConnection sasdas = new SQLiteConnection("Data Source=" + localFolder1.Path + "\\database.db;foreign keys=true; Version = 3;  New = True; Compress = True; ");
                 ;
                 if (_sqliteConnection == null)
                 {
@@ -34,6 +35,9 @@ namespace UWPYourNoteLibrary.Data.Handler.Adapter
         {
             try
             {
+                //       StorageFolder localFolder1 = ApplicationData.Current.LocalFolder;
+                //      SQLiteConnection sasdas = new SQLiteConnection("Data Source=" + localFolder1.Path + "\\database.db;foreign keys=true; Version = 3;  New = True; Compress = True; ");
+
                 SQLiteConnection sqlite_conn = SQLiteConnection;
                 sqlite_conn.Open();
                 return sqlite_conn;
@@ -43,6 +47,18 @@ namespace UWPYourNoteLibrary.Data.Handler.Adapter
                
             }
             return null;
-               }
+       }
+
+        public static void CloseConnection(SQLiteConnection sqlite_conn)
+        {
+            try
+            {
+                sqlite_  SQLiteAdapter.CloseConnection(conn);
+            }
+            catch(Exception e)
+            {
+                Logger.WriteLog(e.Message);
+            }
+        }
     }
 }

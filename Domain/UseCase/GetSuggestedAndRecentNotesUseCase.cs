@@ -52,14 +52,14 @@ namespace UWPYourNoteLibrary.Domain.UseCase
             {
                 UseCase = useCase;
             }
-            public void onFailure(GetSuggestedAndRecentNotesUseCaseResponse result)
+            public void onFailure(GetSuggestedAndRecentNotesUseCaseResponse response)
             {
-                UseCase?.PresenterCallBack?.onFailure(result);
+                UseCase?.PresenterCallBack?.onFailure(response);
             }
 
-            public void onSuccess(GetSuggestedAndRecentNotesUseCaseResponse result)
+            public void onSuccess(GetSuggestedAndRecentNotesUseCaseResponse response)
             {
-                UseCase?.PresenterCallBack?.onSuccess(result);
+                UseCase?.PresenterCallBack?.onSuccess(response);
             }
         }
     }

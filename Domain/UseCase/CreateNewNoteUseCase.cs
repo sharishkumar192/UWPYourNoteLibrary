@@ -36,13 +36,10 @@ namespace UWPYourNoteLibrary.Domain.UseCase
             DataManager = CreateNewNoteDataManager.Singleton;
             PresenterCallBack = callback;
         }
-
         public override void Action()
         {
             DataManager.CreateNewNote(Request.NewNote, new CreateNewNoteUseCaseCallBack(this));
         }
-
-
         private class CreateNewNoteUseCaseCallBack : ICallback<CreateNewNoteUseCaseResponse>
         {
             private CreateNewNoteUseCase UseCase;
@@ -51,14 +48,14 @@ namespace UWPYourNoteLibrary.Domain.UseCase
             {
                 UseCase = useCase;
             }
-            public void onFailure(CreateNewNoteUseCaseResponse result)
+            public void onFailure(CreateNewNoteUseCaseResponse response)
             {
-                UseCase?.PresenterCallBack?.onFailure(result);
+                UseCase?.PresenterCallBack?.onFailure(response);
             }
 
-            public void onSuccess(CreateNewNoteUseCaseResponse result)
+            public void onSuccess(CreateNewNoteUseCaseResponse response)
             {
-                UseCase?.PresenterCallBack?.onSuccess(result);
+                UseCase?.PresenterCallBack?.onSuccess(response);
             }
         }
     }

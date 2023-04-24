@@ -36,10 +36,13 @@ namespace UWPYourNoteLibrary.Data.Managers
             response.NoteId = noteId;
 
             if (noteId != -1)
+            {
                 callback?.onSuccess(response);
+            }
             else
+            {
                 callback?.onFailure(response);
-
+            }
         }
 
 

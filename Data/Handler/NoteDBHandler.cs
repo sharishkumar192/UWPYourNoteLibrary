@@ -48,7 +48,7 @@ namespace UWPYourNoteLibrary.Data.Handler
             {
                 SQLiteCommand command = new SQLiteCommand(query, conn);
                 command.ExecuteNonQuery();
-                conn.Close();
+                  SQLiteAdapter.CloseConnection(conn);
 
 
             }
@@ -56,7 +56,7 @@ namespace UWPYourNoteLibrary.Data.Handler
 
             finally
             {
-                conn.Close();
+                  SQLiteAdapter.CloseConnection(conn);
 
             }
 
@@ -77,7 +77,7 @@ namespace UWPYourNoteLibrary.Data.Handler
             {
                 SQLiteCommand command = new SQLiteCommand(query, conn);
                 command.ExecuteNonQuery();
-                conn.Close();
+                  SQLiteAdapter.CloseConnection(conn);
             }
             catch (Exception e)
             {
@@ -85,7 +85,7 @@ namespace UWPYourNoteLibrary.Data.Handler
             }
             finally
             {
-                conn.Close();
+                  SQLiteAdapter.CloseConnection(conn);
 
             }
 
@@ -100,8 +100,6 @@ namespace UWPYourNoteLibrary.Data.Handler
             string query2 = $"SELECT seq FROM sqlite_sequence where name =  '{tableName}' ; ";
             try
             {
-
-
                 SQLiteCommand command = new SQLiteCommand(query1, conn);
                 SQLiteParameter[] parameters = new SQLiteParameter[6];
                 parameters[0] = new SQLiteParameter("@userId", newNote.userId);
@@ -129,10 +127,13 @@ namespace UWPYourNoteLibrary.Data.Handler
 
                 noteId = (long)command.ExecuteScalar();
             }
-            catch (Exception e) { Logger.WriteLog(e.Message); }
+            catch (Exception e)
+            { 
+                Logger.WriteLog(e.Message); 
+            }
             finally
             {
-                conn.Close();
+                  SQLiteAdapter.CloseConnection(conn);
 
             }
             return noteId;
@@ -157,7 +158,7 @@ namespace UWPYourNoteLibrary.Data.Handler
                 command.Parameters.Add(parameters[1]);
                 command.Parameters.Add(parameters[2]);
                 command.ExecuteNonQuery();
-                conn.Close();
+                  SQLiteAdapter.CloseConnection(conn);
             }
             catch (Exception e)
             {
@@ -166,7 +167,7 @@ namespace UWPYourNoteLibrary.Data.Handler
             }
             finally
             {
-                conn.Close();
+                  SQLiteAdapter.CloseConnection(conn);
 
             }
             return result;
@@ -193,7 +194,7 @@ namespace UWPYourNoteLibrary.Data.Handler
                 command.Parameters.Add(parameters[2]);
                 command.Parameters.Add(parameters[3]);
                 command.ExecuteNonQuery();
-                conn.Close();
+                  SQLiteAdapter.CloseConnection(conn);
 
 
 
@@ -206,7 +207,7 @@ namespace UWPYourNoteLibrary.Data.Handler
             }
             finally
             {
-                conn.Close();
+                  SQLiteAdapter.CloseConnection(conn);
 
             }
             return result;
@@ -231,7 +232,7 @@ namespace UWPYourNoteLibrary.Data.Handler
                 command.Parameters.Add(parameters[1]);
                 command.Parameters.Add(parameters[2]);
                 command.ExecuteNonQuery();
-                conn.Close();
+                  SQLiteAdapter.CloseConnection(conn);
 
 
 
@@ -244,7 +245,7 @@ namespace UWPYourNoteLibrary.Data.Handler
             }
             finally
             {
-                conn.Close();
+                  SQLiteAdapter.CloseConnection(conn);
 
             }
             return result;
@@ -287,7 +288,7 @@ namespace UWPYourNoteLibrary.Data.Handler
             catch (Exception e) { Logger.WriteLog(e.Message); }
             finally
             {
-                conn.Close();
+                  SQLiteAdapter.CloseConnection(conn);
 
             }
             return notes;
@@ -331,7 +332,7 @@ namespace UWPYourNoteLibrary.Data.Handler
             catch (Exception e) { Logger.WriteLog(e.Message); }
             finally
             {
-                conn.Close();
+                  SQLiteAdapter.CloseConnection(conn);
 
             }
 
@@ -419,7 +420,7 @@ namespace UWPYourNoteLibrary.Data.Handler
                     }
                 }
 
-                conn.Close();
+                  SQLiteAdapter.CloseConnection(conn);
             }
             catch (Exception e) { Logger.WriteLog(e.Message); }
             finally
@@ -447,7 +448,7 @@ namespace UWPYourNoteLibrary.Data.Handler
                 command.Parameters.Add(parameters[0]);
                 command.Parameters.Add(parameters[1]);
                 command.ExecuteNonQuery();
-                conn.Close();
+                  SQLiteAdapter.CloseConnection(conn);
 
 
 
@@ -462,7 +463,7 @@ namespace UWPYourNoteLibrary.Data.Handler
             }
             finally
             {
-                conn.Close();
+                  SQLiteAdapter.CloseConnection(conn);
 
             }
             return result;
@@ -491,7 +492,7 @@ namespace UWPYourNoteLibrary.Data.Handler
             }
             finally
             {
-                conn.Close();
+                  SQLiteAdapter.CloseConnection(conn);
 
             }
             return result;
@@ -522,7 +523,7 @@ namespace UWPYourNoteLibrary.Data.Handler
             catch (Exception e) { Logger.WriteLog(e.Message); }
             finally
             {
-                conn.Close();
+                  SQLiteAdapter.CloseConnection(conn);
 
             }
             return result;
@@ -553,7 +554,7 @@ namespace UWPYourNoteLibrary.Data.Handler
             catch (Exception e) { Logger.WriteLog(e.Message); }
             finally
             {
-                conn.Close();
+                  SQLiteAdapter.CloseConnection(conn);
 
             }
 
@@ -586,13 +587,13 @@ namespace UWPYourNoteLibrary.Data.Handler
 
                     sqlite_datareader.Close();
                 }
-                conn.Close();
+                  SQLiteAdapter.CloseConnection(conn);
 
             }
             catch (Exception e) { Logger.WriteLog(e.Message); }
             finally
             {
-                conn.Close();
+                  SQLiteAdapter.CloseConnection(conn);
 
             }
 
@@ -623,12 +624,12 @@ namespace UWPYourNoteLibrary.Data.Handler
 
                     sqlite_datareader.Close();
                 }
-                conn.Close();
+                  SQLiteAdapter.CloseConnection(conn);
             }
             catch (Exception e) { Logger.WriteLog(e.Message); }
             finally
             {
-                conn.Close();
+                  SQLiteAdapter.CloseConnection(conn);
 
             }
 
@@ -666,12 +667,12 @@ namespace UWPYourNoteLibrary.Data.Handler
 
                     sqlite_datareader.Close();
                 }
-                conn.Close();
+                  SQLiteAdapter.CloseConnection(conn);
             }
             catch (Exception e) { Logger.WriteLog(e.Message); }
             finally
             {
-                conn.Close();
+                  SQLiteAdapter.CloseConnection(conn);
 
             }
 

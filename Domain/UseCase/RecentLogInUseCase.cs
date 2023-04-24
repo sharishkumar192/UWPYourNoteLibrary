@@ -51,15 +51,15 @@ namespace UWPYourNoteLibrary.Domain.UseCase
                 UseCase = useCase;
             }
 
-            public void onFailure(RecentLogInUseCaseResponse result)
+            public void onFailure(RecentLogInUseCaseResponse response)
             {
-                UseCase?.PresenterCallBack?.onFailure(result);
+                UseCase?.PresenterCallBack?.onFailure(response);
 
             }
 
-            public void onSuccess(RecentLogInUseCaseResponse result)
+            public void onSuccess(RecentLogInUseCaseResponse response)
             {
-                UseCase?.PresenterCallBack?.onSuccess(result);
+                UseCase?.PresenterCallBack?.onSuccess(response);
             }
         }
     }
